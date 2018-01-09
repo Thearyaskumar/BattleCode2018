@@ -1,3 +1,1 @@
-# LANGUAGE :)
-
-hey arya, you suck
+hello
