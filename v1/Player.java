@@ -46,6 +46,6 @@ public class Player {
     }
 
     private static int developStrategy(GameController gc){
-        return 0;
+        return 0; // There is no strategy right now
     }
 }
