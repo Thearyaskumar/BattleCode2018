@@ -1,32 +1,12 @@
-# Scaffold for Battlecode 2018
+# Code submission for team error: ';' expected
+### How to test code
+First, ssh into battle@aryask.tk. The password is BattleCode2018
+In this window, type 'run'
 
-This is how you run games!  To start, install docker, and make sure it's started.  
+The manager will be up at aryask.tk:6147/run.html
+If you've made changes to your code, just open another window,
+ssh into battle again, and call 'refresh'
 
-### Unix instructions
-
-#### Mac:
-Install docker for mac: https://www.docker.com/docker-mac
-
-Clone the repo, or click https://github.com/battlecode/bc18-scaffold/archive/master.zip to download
-
-
-#### Linux:
-Install docker for your system.
-
-Clone the repo, or click and run `sudo sh run.sh` in the directory.  Wait a while to download our code, then finally it will say:
-
-`To play games open http://localhost:6147/run.html in your browser`
-
-Follow its instructions, and start runnin them games! (warning, socket.bc18map may be buggy rn)
-
-### Windows instructions
-
-Windows 10 Professional or Enterprise: install https://www.docker.com/docker-windows
-
-Windows 10 Home, Windows 8, Windows 7: install https://docs.docker.com/toolbox/toolbox_install_windows/
-
-double click run.cmd
-
-wait a while
-
-When you get the message: `To play games open http://localhost:6147/run.html in your browser` you're good to go!
+When the replay has finished, use the second window and call 'push'
+You can press 'stop manager' on the website, and once the window 
+which is running the server shows you a prompt again, just close it.
