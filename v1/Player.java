@@ -1,4 +1,3 @@
-//package bot;
 // import the API.
 // See xxx for the javadocs.
 import bc.*;
@@ -9,32 +8,32 @@ public class Player {
         GameController gc = new GameController();
 
         onGameStart();
+        int strategy;
 
         while (true) {
+            // Develop strategy:
+            strategy = developStrategy(gc); // That should call {earth, mars}Player.developStrategy()
+
             // VecUnit is a class that you can think of as similar to ArrayList<Unit>, but immutable.
             VecUnit units = gc.myUnits();
             for (int i = 0; i < units.size(); i++) {
                 Unit unit = units.get(i);
 
                 switch (unit.unitType()){
-                    case Factory: System.out.println("Unit is a Factory");
+                    case Factory: Factory.oneMove(gc, unit, strategy);
                                   break;
-                    case Rocket: System.out.println("Unit is a Rocket");
+                    case Rocket: Rocket.oneMove(gc, unit, strategy);
                                   break;
-                    case Worker: System.out.println("Unit is a Worker");
+                    case Worker: Robot.oneMove(gc, unit, strategy);
                                   break;
-                    case Ranger: System.out.println("Unit is a Ranger");
+                    case Ranger: Robot.oneMove(gc, unit, strategy);
                                   break;
-                    case Mage: System.out.println("Unit is a Mage");
+                    case Mage: Robot.oneMove(gc, unit, strategy);
                                   break;
-                    case Knight: System.out.println("Unit is a Knight");
+                    case Knight: Robot.oneMove(gc, unit, strategy);
                                   break;
-                    case Healer: System.out.println("Unit is a Healer");
+                    case Healer: Robot.oneMove(gc, unit, strategy);
                                   break;
-                }
-
-                while(true){
-                    // Just stop here temporarily
                 }
             }
             // Submit the actions we've done, and wait for our next turn.
@@ -44,5 +43,9 @@ public class Player {
 
     private static void onGameStart(){
         // As of right now, there is nothing particular we are doing at the start of the game :)
+    }
+
+    private static int developStrategy(GameController gc){
+        return 0;
     }
 }
