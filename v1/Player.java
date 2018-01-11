@@ -8,7 +8,7 @@ public class Player {
         // Connect to the manager, starting the game
         GameController gc = new GameController();
 
-        onGameStart()
+        onGameStart();
 
         while (true) {
             // VecUnit is a class that you can think of as similar to ArrayList<Unit>, but immutable.
