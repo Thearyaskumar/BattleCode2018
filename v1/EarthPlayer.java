@@ -1,4 +1,4 @@
-package bot;
+//package bot;
 public class EarthPlayer extends Player{
 	
 }

@@ -1,4 +1,4 @@
-package bot;
+//package bot;
 public class MarsPlayer extends Player{
 	
 }
