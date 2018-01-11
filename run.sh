@@ -1,5 +1,5 @@
 #!/bin/sh
-
+docker pull battlecode/battlecode-2018
 docker stop $(docker ps -q) 2> /dev/null
 docker container rm $(docker container ls -aq) 2> /dev/null
 docker volume rm $(docker volume ls -q)$ 2> /dev/null
