@@ -8,7 +8,6 @@ public class EarthPlayer{
 
         for(int i = 0; i < units.size(); i++){
             MapLocation l = units.get(i).location().mapLocation();
-            System.out.println(l.toString());
             strat[0] += l.getX();
             strat[1] += l.getY();
             strat[2]++;
@@ -16,7 +15,7 @@ public class EarthPlayer{
 
         // Time to average them!
         strat[0] = (int)map.getWidth() - (strat[0]/strat[2]);
-        strat[1] = (int)map.getHeight() - (strat[0]/strat[2]);
+        strat[1] = (int)map.getHeight() - (strat[1]/strat[2]);
         strat[2] = 0; // Just go there :)
 
         return strat;

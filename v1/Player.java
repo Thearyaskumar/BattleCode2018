@@ -9,14 +9,11 @@ public class Player {
 
         // This should be called repeatedly, for now we'll do it once
         int[] strategy = developStrategy(gc);
-        System.out.println("(" + strategy[0] + ", " + strategy[1] + ")");
 
-        /*
         while (true) {
-            // Develop strategy:
+            // No more strategy development for now: eventually, the function will have to be improved a ton
             VecUnit units = gc.myUnits();
 
-            // VecUnit is a class that you can think of as similar to ArrayList<Unit>, but immutable.
             for (int i = 0; i < units.size(); i++) {
                 Unit unit = units.get(i);
 
@@ -40,15 +37,11 @@ public class Player {
             // Submit the actions we've done, and wait for our next turn.
             gc.nextTurn();
         }
-        */
-
-        //Temporary:
-        while (true){
-            gc.nextTurn();
-        }
     }
 
     private static int[] developStrategy(GameController gc){
-        return EarthPlayer.strategy(gc); // There is no strategy right now
+	if (gc.planet() == Planet.valueOf("Earth"))
+	    return EarthPlayer.strategy(gc); //The strategy is just: Head over to the enemy
+        return MarsPlayer.strategy(gc); // Haven't even thought about this yet
     }
 }
