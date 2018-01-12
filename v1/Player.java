@@ -7,15 +7,15 @@ public class Player {
         // Connect to the manager, starting the game
         GameController gc = new GameController();
 
-        onGameStart();
-        int strategy;
+        // This should be called repeatedly, for now we'll do it once
+        int strategy = developStrategy(gc);
+
 
         while (true) {
             // Develop strategy:
-            strategy = developStrategy(gc); // That should call {earth, mars}Player.developStrategy()
-
-            // VecUnit is a class that you can think of as similar to ArrayList<Unit>, but immutable.
             VecUnit units = gc.myUnits();
+            
+            // VecUnit is a class that you can think of as similar to ArrayList<Unit>, but immutable.
             for (int i = 0; i < units.size(); i++) {
                 Unit unit = units.get(i);
 
@@ -41,11 +41,7 @@ public class Player {
         }
     }
 
-    private static void onGameStart(){
-        // As of right now, there is nothing particular we are doing at the start of the game :)
-    }
-
-    private static int developStrategy(GameController gc){
-        return 0; // There is no strategy right now
+    private static int[] developStrategy(GameController gc){
+        return EarthPlayer.strategy(gc); // There is no strategy right now
     }
 }
