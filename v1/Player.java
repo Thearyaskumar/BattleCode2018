@@ -1,6 +1,7 @@
 // import the API.
 // See xxx for the javadocs.
 import bc.*;
+import java.util.HashSet;
 
 public class Player {
 	public static void main(String[] args) {
@@ -8,7 +9,14 @@ public class Player {
 		GameController gc = new GameController();
 		// This should be called repeatedly, for now we'll do it once
 		int[] strategy = developStrategy(gc);
-		while (true) {
+		HashSet<Robot> myRobots = new HashSet<Robot>();
+		HashSet<Factory> myFactories = new HashSet<Factory>();
+		HashSet<Rocket> myRockets = new HashSet<Rocket>();
+
+
+		while (true) { // Every turn:
+			// First we will add all new units:
+			
 			// No more strategy development for now: eventually, the function will have to be improved a ton
 			VecUnit units = gc.myUnits();
 			for (int i = 0; i < units.size(); i++) {
