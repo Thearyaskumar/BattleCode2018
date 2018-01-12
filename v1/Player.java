@@ -9,7 +9,7 @@ public class Player {
 
         // This should be called repeatedly, for now we'll do it once
         int[] strategy = developStrategy(gc);
-
+        System.out.println(strategy.toString());
 
         while (true) {
             // Develop strategy:
