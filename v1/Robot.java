@@ -1,5 +1,5 @@
 import bc.*;
-public class Robot{
+public class Robot extends Unit {
     public static void oneMove(GameController gc, Unit unit, int[] strategy){
         MapLocation m = new MapLocation(gc.planet(), strategy[0], strategy[1]);
 	   bug(unit, gc, m); // Lazy pathfinding to other side
@@ -14,7 +14,11 @@ public class Robot{
             for(int i = 0; i < 8; i++)
             	if (!gc.canMove(unit.id(), d))
                     System.out.println("Can't Move!");
-            gc.moveRobot(unit.id(), d);
+
+            if (gc.canMove(unit.id(), d))
+                gc.moveRobot(unit.id(), d);
+            else
+                System.out.println("I'm stuck :(");
         }
     }
 }
