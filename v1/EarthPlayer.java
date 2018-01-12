@@ -14,8 +14,8 @@ public class EarthPlayer{
         }
 
         // Time to average them!
-        strat[0] = (int)map.getWidth() - (strat[0]/strat[2]);
-        strat[1] = (int)map.getHeight() - (strat[0]/strat[2]);
+        strat[0] = strat[0]/strat[2];
+        strat[1] = strat[0]/strat[2];
         strat[2] = 0; // Just go there :)
 
         return strat;
