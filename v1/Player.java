@@ -43,11 +43,6 @@ public class Player {
         */
 
         //Temporary:
-        VecUnit units = gc.myUnits();
-        for (int i = 0; i < units.size(); i++) {
-            Unit unit = units.get(i);
-            Robot.oneMove(gc, unit, strategy);
-        }
         while (true){
             gc.nextTurn();
         }

@@ -8,6 +8,7 @@ public class EarthPlayer{
 
         for(int i = 0; i < units.size(); i++){
             MapLocation l = units.get(i).location().mapLocation();
+            System.out.println(l.toString());
             strat[0] += l.getX();
             strat[1] += l.getY();
             strat[2]++;
