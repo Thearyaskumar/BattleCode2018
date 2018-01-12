@@ -8,13 +8,13 @@ public class Player {
         GameController gc = new GameController();
 
         // This should be called repeatedly, for now we'll do it once
-        int strategy = developStrategy(gc);
+        int[] strategy = developStrategy(gc);
 
 
         while (true) {
             // Develop strategy:
             VecUnit units = gc.myUnits();
-            
+
             // VecUnit is a class that you can think of as similar to ArrayList<Unit>, but immutable.
             for (int i = 0; i < units.size(); i++) {
                 Unit unit = units.get(i);

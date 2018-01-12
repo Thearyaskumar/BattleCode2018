@@ -1,9 +1,9 @@
 import bc.*;
-public static class EarthPlayer{
+public class EarthPlayer{
     public static int[] strategy(GameController gc){
         int[] strat = new int[]{0,0,0};
 
-        PlanetMap map = gc.startingMap(Earth);
+        PlanetMap map = gc.startingMap(Planet.values()[0]);
         VecUnit units = map.getInitial_units();
 
         for(int i = 0; i < units.size(); i++){
@@ -14,8 +14,8 @@ public static class EarthPlayer{
         }
 
         // Time to average them!
-        strat[0] = map.getWidth() - (strat[0]/strat[2]);
-        strat[1] = map.getHeight() - (strat[0]/strat[2]);
+        strat[0] = map.getWidth() - (int)(strat[0]/strat[2]);
+        strat[1] = map.getHeight() - (int)(strat[0]/strat[2]);
         strat[2] = 0; // Just go there :)
 
         return strat;
