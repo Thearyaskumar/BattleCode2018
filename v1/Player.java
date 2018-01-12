@@ -11,6 +11,7 @@ public class Player {
         int[] strategy = developStrategy(gc);
         System.out.println("(" + strategy[0] + ", " + strategy[1] + ")");
 
+        /*
         while (true) {
             // Develop strategy:
             VecUnit units = gc.myUnits();
@@ -37,6 +38,17 @@ public class Player {
                 }
             }
             // Submit the actions we've done, and wait for our next turn.
+            gc.nextTurn();
+        }
+        */
+
+        //Temporary:
+        VecUnit units = gc.myUnits();
+        for (int i = 0; i < units.size(); i++) {
+            Unit unit = units.get(i);
+            Robot.oneMove(gc, unit, strategy);
+        }
+        while (true){
             gc.nextTurn();
         }
     }
