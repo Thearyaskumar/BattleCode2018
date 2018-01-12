@@ -3,7 +3,7 @@ public static class EarthPlayer{
     public static int[] strategy(GameController gc){
         int[] strat = new int[]{0,0,0};
 
-        PlanetMap map = gc.startingMap
+        PlanetMap map = gc.startingMap();
         VecUnit units = map.getInitial_units();
 
         for(int i = 0; i < units.size(); i++){
