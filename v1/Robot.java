@@ -1,16 +1,14 @@
 import bc.*;
 public class Robot extends Unit {
+    public int target;
+    public MapLocation targetLoc;
     public Robot(){
+        target = -1;
         super();
     }
 
     public int hashCode(){
         return this.id();
-    }
-
-    public void oneMove(GameController gc, Unit unit, int[] strategy){
-        MapLocation m = new MapLocation(gc.planet(), strategy[0], strategy[1]);
-        bug(unit, gc, m); // Lazy pathfinding to other side
     }
 
     public void bug(Unit unit, GameController gc, MapLocation m){
