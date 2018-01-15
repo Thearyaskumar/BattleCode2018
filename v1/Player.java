@@ -2,6 +2,9 @@
 // See xxx for the javadocs.
 import bc.*;
 import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.Queue;
+import java.util.LinkedList;
 
 public class Player {
 	public static void main(String[] args) {
@@ -9,19 +12,29 @@ public class Player {
 		GameController gc = new GameController();
 
 		// Setup hashsets for our units
-		HashSet<Robot> myWorkers = new HashSet<Robot>();
-		HashSet<Robot> myWarriors = new HashSet<Robot>();
-		HashSet<Factory> myFactories = new HashSet<Factory>();
-		HashSet<Rocket> myRockets = new HashSet<Rocket>();
+		ArrayList<Robot> myWorkers = new ArrayList<Robot>();
+		ArrayList<Robot> myWarriors = new ArrayList<Robot>();
+		ArrayList<Factory> myFactories = new ArrayList<Factory>();
+		ArrayList<Rocket> myRockets = new ArrayList<Rocket>();
+
+		// Hashsets for the robots we've already seen
+		HashSet<Integer> seen = new HashSet<Integer>();
+
+		//Setup rocket request counts (Rocket Request Worker, etc):
+		Queue<MapLocation> rrWorkers = new LinkedList<MapLocation>();
+		Queue<MapLocation> rrKnights = new LinkedList<MapLocation>();
+		Queue<MapLocation> rrMages = new LinkedList<MapLocation>();
+		Queue<MapLocation> rrRangers = new LinkedList<MapLocation>();
+		Queue<MapLocation> rrHealers = new LinkedList<MapLocation>();
 
 		// Setup worker task counts (Worker Task Factory, etc):
 		int wtExplore, wtFactory, wtRocket, wtClone, wtKarbonite, wtRepair;
 		HashSet<Robot> unassignedWorkers = new HashSet<Robot>();
-		MapLocation rocketLocation = null; // To build the first rocket after the tech is researched
+		int rocketsBuilt = 0; // To build the first rocket after the tech is researched
 
-		// Factory tasks counts (Factory Request Knight, etc):
-		int frHealer, frKnight, frMage, frRanger, frWorker;
-		frHealer = frKnight = frMage = frRanger = frWorker = 0;
+		// Factory building counts (Factory Building Knight, etc):
+		int fbHealer, fbKnight, fbMage, fbRanger, fbWorker;
+		fbHealer = fbKnight = fbMage = fbRanger = fbWorker = 0;
 
 		// The brilliantly lazy research solution:
 		// Hardcode 1000 turn's worth of research :)
@@ -39,31 +52,34 @@ public class Player {
 		gc.queueResearch(UnitType.Mage); //75
 
 		while (true) { // Every turn:
+
 			// First we will add all new units:
 			VecUnit units = gc.myUnits();
 			for(int i = 0; i < units.size(); i++){
-				Unit u = units.get(i); // Get all the units
-
-				if (u.unitType() == UnitType.Factory){ // Factory
-					Factory f = new Factory(u, gc);
-					if(!myFactories.contains(f))
-						myFactories.add(f);
-
-				} else if (u.unitType() == UnitType.Rocket){ // Rockets
-					Rocket r = new Rocket(u, gc);
-					if(!myRockets.contains(u))
-						myRockets.add(r);
-
-				} else if (u.unitType() == UnitType.Worker){ // Workers
-					Robot r = new Robot(u, gc);
-					if(!myWorkers.contains(u))
-						myWorkers.add(r);
-
-				} else { // Warriors
-					Robot r = new Robot(u, gc);
-					if(!myWarriors.contains(u))
-						myWarriors.add(r);
+				Unit u = units.get(i); // Get the unit
+				if (!seen.contains(u.id())){ // If we don't recognize it's id
+					switch(u.unitType()){ // Add it to the respective collection
+						case Factory: myFactories.add(new Factory(u, gc)); break;
+						case Rocket:  myRockets.add(new Rocket(u, gc));    break;
+						case Worker:  myWorkers.add(new Robot(u,gc));      break;
+						default:      myWarriors.add(new Robot(u,gc));     break;
+					}
+					seen.add(u.id());
 				}
+			}
+
+			// Ship rockets and request if necessary:
+			for(Rocket r : myRockets){
+				if(!r.requested){ // Don't request from factories - they calc on their own
+					for(int i = 0; i < 4; i++)
+						rrKnights.add(r.location()); // Add knight request
+					for(int i = 0; i < 2; i++)
+						rrRangers.add(r.location()); // Add ranger request
+					rrMages.add(r.location()); // Add mage request
+					rrWorkers.add(r.location()); // Add worker request
+					r.requested = true;
+				}
+				r.launchIfFull(); // GOOOOOO!
 			}
 
 			// Let's figure out what each worker is doing!
@@ -82,73 +98,82 @@ public class Player {
 			}
 
 			// Now we gotta assign the new ones:
-			// TODO: Change this from a bunch of if statements
 			for(Robot r : unassignedWorkers){
-				if(r.canReplicate()){ // First, try to clone
+				if(myWorkers.size() + wtClone < 2){ // Keep 2 workers
 					r.replicate();
+					switch(r.target){
+						case 0: wtExplore++; break;
+						case 3: wtClone++; break;
+					}
 
-				} else if(gc.round() < 70){
+				} else if(gc.karbonite() > 100){ // Next, if round < 70 build factories
 					r.buildFactory(); // Try to build a factory
 					switch(r.target){ // We might not be able to build
 						case 0: wtExplore++; break; // If this happens, we can't build a factory rn
 						case 1: wtFactory++; break; // We can build a factory within sight range
 					}
 
-				} else if (rocketLocation == null && gc.researchInfo().getLevel(UnitType.Rocket) > 0) {
-					// After we've researched rockets, our next priority is to build at least one.
-					rocketLocation = r.buildRocket(); // Select a location for our rocket
-					wtRocket++;
-
-				} else if (rocketLocation != null && wtRocket <= 2){ //Only one worker on the rocket rn
+				/*} else if (rrWorkers.size() > 0){ // Send to rockets if any of them need it
+					r.targetLoc = rrWorkers.remove();
 					r.target = 2;
-					r.targetLoc = rocketLocation;
 					wtRocket++;
 
-				} else if (wtFactory < wtExplore){
-					r.buildFactory();
-					switch(r.target){ // We might not be able to build
-						case 0: wtExplore++; break; // If this happens, we can't build a factory rn
-						case 1: wtFactory++; break; // We can build a factory within sight range
-					}
-
-				} else {
-					r.explore(); // Nothing better to do - just explore
-				}
+				} else if (gc.karbonite() > 75 && rocketsBuilt == 0 && gc.researchInfo().getLevel(UnitType.Rocket) > 0) {
+					// After we've researched rockets, our next priority is to build at least one.
+					r.buildRocket(); // Select a location for our rocket
+					if(r.target == 2)
+						wtRocket++;
+					else
+						wtExplore++;*/
+				} // Nothing worth doing: Just keep doing nothing
 			}
 
 			// Okay we're ready - lets let the robots work towards their goals!
-			for(Robot r : unassignedWorkers){
+			for(Robot r : myWorkers){
 				r.performTasks();
 			}
 
 			//Let's manage the factories!:
 			for(Factory f : myFactories){
-				//Determine what should be made (If something can be made)
-				if(f.canBuild()){
-					if (frHealer > 0){
-        			    f.build(UnitType.Healer);
-        			    frHealer--;
-        			} else if (frMage > 0){
-        			    f.build(UnitType.Mage);
-        			    frMage--;
-        			} else if (frRanger > 0){
-        			    f.build(UnitType.Ranger);
-        			    frRanger--;
-        			} else if (frWorker > 0){
-        			    f.build(UnitType.Worker);
-        			    frWorker--;
-        			} else {
-        			    f.build(UnitType.Knight);
-        			    frKnight = frKnight > 0 ? frKnight - 1 : 0; // It's the default, so only reduce if it was requested
-        			}
+				//Determine what should be made (Based on rocket requests)
+				if(rrKnights.size() > fbKnight){
+					f.build(UnitType.Knight);
+					fbKnight += f.building();
+				} else if (rrMages.size() > fbMage){
+					f.build(UnitType.Mage);
+					fbMage += f.building();
+				} else if (rrHealers.size() > fbHealer){
+					f.build(UnitType.Healer);
+					fbHealer += f.building();
+				} else if (rrRangers.size() > fbRanger){
+					f.build(UnitType.Ranger);
+					fbRanger += f.building();
+				} else { //Just build some knights
+					f.build(UnitType.Knight);
 				}
+
 				// Empty Garrison if possible
-				f.unloadGarrison();
+				if (f.canUnloadGarrison()) {
+					UnitType built = f.unloadGarrison();
+					switch(built){ // Reduce the factory building number (It's been built)
+						case Worker: fbWorker--; break;
+						case Knight: fbKnight--; break;
+						case Ranger: fbRanger--; break;
+						case Mage: fbMage--; break;
+						case Healer: fbHealer--; break;
+					}
+				}
+
+				System.out.println("Factory health: " + f.unit.health());
 			}
 
 			// TODO: Determine attacks for the remainder of the troops
 
 			// TODO: Intelligent Queue :)
+
+			// TODO: Send troops towards the rockets
+
+			// TODO: Rockets load troops
 
 			// Submit the actions we've done, and wait for our next turn.
 			gc.nextTurn();
