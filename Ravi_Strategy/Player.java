@@ -8,8 +8,9 @@ import java.util.HashMap;
 public class Player {
 
     //variables for strategy
-    public static final int ATTACK = 9;
-    public static final int DEFEND = 8;
+    public static final int ATTACK = 10;
+    public static final int DEFEND = 9;
+    public static final int BUILD_WORKER = 8;
     public static final int BUILD_HEALER = 7;
     public static final int BUILD_KNIGHT = 6;
     public static final int BUILD_MAGE = 5;
@@ -22,7 +23,7 @@ public class Player {
 
 
     public static boolean smallMap = false;
-    public static int[] robotTasks = new int[10]; //Stores the number of robots that have been assigned each strategy
+    public static int[] robotTasks = new int[11]; //Stores the number of robots that have been assigned each strategy
                                                  //value of strategy corresponds to index in array -> change len of array to # of constants
     public static HashMap<Integer,Integer> currentTasks;
 
@@ -93,6 +94,17 @@ public class Player {
                     return currentTasks.get(unit.id());
             
             case Factory:
+                VecUnit units = gc.myUnits();
+
+                if(robotTasks[BUILD_WORKER]<2) {
+                    int workerCount = 0;
+                    for(int i = 0; i < units.size(); i++) {
+                        if(units.get(i).unitType() == UnitType.Worker)
+                            workerCount++;
+                    }
+                    if(workerCount<=1)
+                        return BUILD_WORKER;
+                }
                 switch((robotTasks[BUILD_RANGER]+robotTasks[BUILD_MAGE]+robotTasks[BUILD_KNIGHT])%3) {
                     case 0:
                         return BUILD_RANGER;

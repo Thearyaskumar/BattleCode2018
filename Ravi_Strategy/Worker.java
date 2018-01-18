@@ -7,6 +7,7 @@ public class Worker{
         VecMapLocation m;
         Direction d;
         int pos; 
+        if(!unit.location().isInGarrison()) {
         switch (strategy) {
             case Player.HARVEST:
                 m = gc.allLocationsWithin(unit.location().mapLocation(),1);
@@ -81,6 +82,7 @@ public class Worker{
                 }
                 break;
         }
+    }
 
 
 

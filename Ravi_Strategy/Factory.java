@@ -25,6 +25,10 @@ public class Factory{
                         if(gc.canProduceRobot(unit.id(),UnitType.Knight))
                             gc.produceRobot(unit.id(),UnitType.Knight);
                         break;
+                        case Player.BUILD_WORKER:
+                        if(gc.canProduceRobot(unit.id(),UnitType.Worker))
+                            gc.produceRobot(unit.id(),UnitType.Worker);
+                        break;
                 }
         }
     }
