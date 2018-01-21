@@ -17,7 +17,7 @@ public class Player{
         HashSet<Integer> seen = new HashSet<Integer>();
 
         public int evalMobility(PlanetMap pm){
-        	return -1
+        	return -1;
         }
         //Get info about Earth and Mars
         EarthMap = gc.startingMap(Planet.Earth);
@@ -25,6 +25,9 @@ public class Player{
         EarthSize = EarthMap.getHeight()*EarthMap.getWidth();
         MarsSize = MarsMap.getHeight()*MarsMap.getWidth();
         EarthMobility = evalMobility(EarthMap);
+
+        boolean mapLarge = EarthSize > 750 ? true : false;
+        boolean haveSuicideKnighted;
 
         while(1){
             // First we will add all new units:
@@ -43,6 +46,28 @@ public class Player{
                     }
                     seen.add(u.id()); // We've seen them now
                 }
+            }
+
+            // updateTeamArray (to indicate alive)
+
+            if(mapLarge){
+                if(!haveSuicideKnighted){
+                    // Do stuff
+                }
+                rocketIfPossible();
+                calcHab():
+                buildFactories();
+                agro(Mage+workers);
+                determineResearch();
+            } else {
+                // AGRO
+                queueKnights()
+                evalMobility():
+                    high: queue myKnights
+                    low: queue mages, targetMars
+                highPriorityFactories();
+                calcAdvantage():
+                        good: FACTORIES
             }
 
             // DO THE REST OF THE STUFF HERE
