@@ -1,4 +1,4 @@
-//package bot;
-public class EarthPlayer extends Player{
-	
+import bc.*;
+public class EarthPlayer{
+    
 }
