@@ -29,8 +29,7 @@ public class Player{
                         case Mage:    myMages.add(new Mage(u,gc));         break;
                         case Ranger:  myRangers.add(new Ranger(u,gc));     break;
                         case Knight:  myKnights.add(new Knight(u,gc));     break;
-                        case Healer:  myHealers.add(new Healer(u,gc));     break;
-                        
+                        case Healer:  myHealers.add(new Healer(u,gc));     break;     
                     }
                     seen.add(u.id()); // We've seen them now
                 }
