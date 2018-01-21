@@ -16,6 +16,16 @@ public class Player{
         // Hashsets for the robots we've already seen
         HashSet<Integer> seen = new HashSet<Integer>();
 
+        public int evalMobility(PlanetMap pm){
+        	return -1
+        }
+        //Get info about Earth and Mars
+        EarthMap = gc.startingMap(Planet.Earth);
+        MarsMap = gc.startingMap(Planet.Mars);
+        EarthSize = EarthMap.getHeight()*EarthMap.getWidth();
+        MarsSize = MarsMap.getHeight()*MarsMap.getWidth();
+        EarthMobility = evalMobility(EarthMap);
+
         while(1){
             // First we will add all new units:
             VecUnit units = gc.myUnits();
