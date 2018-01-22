@@ -8,6 +8,8 @@ import java.util.HashMap;
 public class Player {
 
     //variables for strategy
+    public static final int LOAD = 12;
+    public static final int LAUNCH = 11;
     public static final int ATTACK = 10;
     public static final int DEFEND = 9;
     public static final int BUILD_WORKER = 8;
@@ -19,7 +21,6 @@ public class Player {
     public static final int BUILD_FACTORY = 2;
     public static final int HARVEST = 1;
     public static final int DEFAULT = 0;
-
 
 
     public static boolean smallMap = false;
@@ -85,6 +86,8 @@ public class Player {
         switch (unit.unitType()){
             case Worker:
                 if(!currentTasks.containsKey(unit.id()) || currentTasks.get(unit.id())==DEFAULT) {
+                    if(robotTasks[BUILD_FACTORY]<gc.startingMap(gc.planet()).getInitial_units().size()/2/2) {
+                        return BUILD_FACTORY;
                     if(robotTasks[BUILD_FACTORY]<gc.startingMap(gc.planet()).getInitial_units().size()/2/2) {
                         return BUILD_FACTORY;
                     } else {

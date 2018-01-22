@@ -163,6 +163,17 @@ public class Player{
         }
     }
 
+<<<<<<< HEAD
+    void rocketIfPossible();
+    int calcHab();
+    void buildFactories();
+    void agro();
+    void determineResearch();
+
+
+    
+}
+=======
   	void rocketIfPossible();
     int calcHab(){
 
@@ -178,3 +189,4 @@ public class Player{
     void agro();
     void determineResearch();
 }
+>>>>>>> 9fd87a22b6550df440efb9a2b6d4e86e2e273937
