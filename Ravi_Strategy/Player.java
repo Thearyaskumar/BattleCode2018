@@ -20,7 +20,20 @@ public class Player {
     public static final int HARVEST = 1;
     public static final int DEFAULT = 0;
 
-
+    // The brilliantly lazy research solution:
+    // Hardcode 1000 turn's worth of research :)
+    gc.queueResearch(UnitType.Rocket); //100
+    gc.queueResearch(UnitType.Mage); //25
+    gc.queueResearch(UnitType.Mage); //75
+    gc.queueResearch(UnitType.Worker); //25
+    gc.queueResearch(UnitType.Ranger); //25
+    gc.queueResearch(UnitType.Ranger); //100
+    gc.queueResearch(UnitType.Ranger); //200
+    gc.queueResearch(UnitType.Rocket); //100
+    gc.queueResearch(UnitType.Rocket); //100
+    gc.queueResearch(UnitType.Knight); //25
+    gc.queueResearch(UnitType.Knight); //75
+    gc.queueResearch(UnitType.Knight); //150
 
     public static boolean smallMap = false;
     public static int[] robotTasks = new int[11]; //Stores the number of robots that have been assigned each strategy
