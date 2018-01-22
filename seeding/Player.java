@@ -73,4 +73,13 @@ public class Player{
             // DO THE REST OF THE STUFF HERE
         }
     }
+
+    void rocketIfPossible();
+    int calcHab();
+    void buildFactories();
+    void agro();
+    void determineResearch();
+
+
+    
 }
