@@ -81,6 +81,43 @@ public class Worker{
                     }
                 }
                 break;
+
+                case Player.BUILD_ROCKET:
+                m = gc.allLocationsWithin(unit.location().mapLocation(),1);
+                boolean moveDone = false;
+                for(pos = 0; pos < m.size(); pos++) {
+                    if(gc.hasUnitAtLocation(m.get(pos)) && gc.senseUnitAtLocation(m.get(pos)).unitType()==UnitType.Factory && gc.senseUnitAtLocation(m.get(pos)).structureIsBuilt()==0 && gc.canBuild(unit.id(),gc.senseUnitAtLocation(m.get(pos)).id())) {
+                        gc.build(unit.id(),gc.senseUnitAtLocation(m.get(pos)).id());
+                        moveDone = true;
+                        break;
+                    }
+                }
+                if(!moveDone)
+                    for(pos = 0; pos < m.size(); pos++) {
+                        if(unit.location().mapLocation().directionTo(m.get(pos)) != Direction.North && gc.canBlueprint(unit.id(),UnitType.Rocket,unit.location().mapLocation().directionTo(m.get(pos)))) {  
+                            gc.blueprint(unit.id(),UnitType.Rocket,unit.location().mapLocation().directionTo(m.get(pos)));
+                            moveDone = true;
+                            break;
+                        }
+                    }
+                if(!moveDone && gc.isMoveReady(unit.id())) { //no spaces left...move to new location
+                    if(target==null) 
+                        m = gc.allLocationsWithin(unit.location().mapLocation(),50);
+                        target = m.get((int)(Math.random()*m.size()));
+                    d = unit.location().mapLocation().directionTo(target);
+                    if(target!=null && (unit.location().mapLocation().equals(target) || (unit.location().mapLocation().isWithinRange(unit.visionRange(),target) && gc.startingMap(gc.planet()).isPassableTerrainAt(target)==0))) {
+                        target = null;
+                    }
+                    pos=0;
+                    while(pos<8 && !gc.canMove(unit.id(),d)) {
+                        d = Math.random()<0.5 ? bc.bcDirectionRotateLeft(d) : bc.bcDirectionRotateRight(d);
+                        pos++;
+                    }
+                    if(pos<8) {
+                        gc.moveRobot(unit.id(),d);
+                    }
+                }
+                break;
         }
     }
 
