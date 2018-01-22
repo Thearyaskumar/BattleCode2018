@@ -23,7 +23,6 @@ public class Player {
     public static final int DEFAULT = 0;
 
 
-
     public static boolean smallMap = false;
     public static int[] robotTasks = new int[11]; //Stores the number of robots that have been assigned each strategy
                                                  //value of strategy corresponds to index in array -> change len of array to # of constants
