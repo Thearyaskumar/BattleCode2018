@@ -10,7 +10,7 @@ public class Robot{
         MapLocation locID;
         Team otherTeam = gc.team()==Team.Blue ? Team.Red : Team.Blue;
         Veci32 teamArray = gc.getTeamArray(gc.planet());
-        if(!unit.location().isInGarrison()) {
+        if(!unit.location().isInGarrison() && gc.senseNearbyUnitsByType(unit.location().mapLocation(),1,UnitType.Rocket).size()==0) {
             switch (strategy) {
                 case Player.ATTACK:
                     nearby = gc.senseNearbyUnitsByTeam(unit.location().mapLocation(),unit.attackRange(),otherTeam);

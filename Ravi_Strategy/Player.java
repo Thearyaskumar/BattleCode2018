@@ -20,6 +20,7 @@ public class Player {
     public static final int HARVEST = 1;
     public static final int DEFAULT = 0;
 
+    public static   boolean SLOW_PRODUCTION = false;
 
     public static boolean smallMap = false;
     public static int[] robotTasks = new int[11]; //Stores the number of robots that have been assigned each strategy
@@ -52,20 +53,24 @@ public class Player {
                 strategy = developStrategy(gc, unit); // That should call {earth, mars}Player.developStrategy()
                 robotTasks[strategy] += 1;
                 currentTasks.put(unit.id(),strategy);
-
-                switch (unit.unitType()){
-                    case Factory: Factory.oneMove(gc, unit, strategy);
-                                  break;
-                    case Worker: Worker.oneMove(gc, unit, strategy);
-                                  break;
-                    case Ranger: Robot.oneMove(gc, unit, strategy);
-                                  break;
-                    case Mage: Robot.oneMove(gc, unit, strategy);
-                                  break;
-                    case Knight: Robot.oneMove(gc, unit, strategy);
-                                  break;
-                    case Healer: Robot.oneMove(gc, unit, strategy);
-                                  break;
+                
+                try {
+                    switch (unit.unitType()){
+                        case Factory: Factory.oneMove(gc, unit, strategy);
+                                    break;
+                        case Worker: Worker.oneMove(gc, unit, strategy);
+                                    break;
+                        case Ranger: Robot.oneMove(gc, unit, strategy);
+                                    break;
+                        case Mage: Robot.oneMove(gc, unit, strategy);
+                                    break;
+                        case Knight: Robot.oneMove(gc, unit, strategy);
+                                    break;
+                        case Healer: Robot.oneMove(gc, unit, strategy);
+                                    break;
+                    }
+                } catch(Exception e) {
+                    e.printStackTrace();
                 }
             }
         } catch(Exception e) {
@@ -83,54 +88,66 @@ public class Player {
         gc.queueResearch(UnitType.Mage); //25
         gc.queueResearch(UnitType.Mage); //75
         gc.queueResearch(UnitType.Rocket); //100
-        gc.queueResearch(UnitType.Worker); //25
+        gc.queueResearch(UnitType.Mage); //100
         gc.queueResearch(UnitType.Ranger); //25
-        gc.queueResearch(UnitType.Ranger); //100
-        gc.queueResearch(UnitType.Ranger); //200
-        gc.queueResearch(UnitType.Rocket); //100
         gc.queueResearch(UnitType.Rocket); //100
         gc.queueResearch(UnitType.Knight); //25
         gc.queueResearch(UnitType.Knight); //75
         gc.queueResearch(UnitType.Knight); //150
+        gc.queueResearch(UnitType.Worker); //75
+        gc.queueResearch(UnitType.Worker); //75
+        gc.queueResearch(UnitType.Ranger); //100
+        gc.queueResearch(UnitType.Worker); //75
     }
 
     private static int developStrategy(GameController gc, Unit unit){
+        if(gc.round()>550 && gc.round()<1000)
+            SLOW_PRODUCTION=true;
+        else if(gc.round()>200 && gc.round()<250)
+            SLOW_PRODUCTION=true;
+        else
+            SLOW_PRODUCTION=false;
         //System.out.println(gc.karbonite()); //print karbonite amount to console
             switch (unit.unitType()){
                 case Worker:
-                    if(!currentTasks.containsKey(unit.id()) || currentTasks.get(unit.id())==DEFAULT) {
-                        if(robotTasks[BUILD_FACTORY]<gc.startingMap(gc.planet()).getInitial_units().size()/2/2) {
+                    if(!currentTasks.containsKey(unit.id()) || currentTasks.get(unit.id())==DEFAULT || gc.round()%10==0) {
+                        if(robotTasks[BUILD_FACTORY]<3) {
                             return BUILD_FACTORY;
                         } else {
-                            // if(gc.researchInfo().getLevel(UnitType.Rocket)>0) {
-                                
-                                return Math.random()<0.5 ? HARVEST : BUILD_ROCKET;
-                            //}
-                            // else
-                            //     return HARVEST;
+                            //System.out.println(gc.researchInfo().getLevel(UnitType.Rocket));
+                            if(gc.researchInfo().getLevel(UnitType.Rocket)>0) {
+                                return Math.random()<0.25 ? HARVEST : BUILD_ROCKET;
+                            } else
+                                return HARVEST;
                         }
                     } else
-                        return Math.random() < 0.5 ? currentTasks.get(unit.id()) : BUILD_ROCKET;
+                        return currentTasks.get(unit.id());
                 
                 case Factory:
                     VecUnit units = gc.myUnits();
 
-                    if(robotTasks[BUILD_WORKER]<2) {
+                    if(robotTasks[BUILD_WORKER]<3) {
                         int workerCount = 0;
                         for(int i = 0; i < units.size(); i++) {
                             if(units.get(i).unitType() == UnitType.Worker)
                                 workerCount++;
                         }
-                        if(workerCount<=1)
+                        if(workerCount<=5)
                             return BUILD_WORKER;
                     }
-                    switch((robotTasks[BUILD_RANGER]+robotTasks[BUILD_MAGE]+robotTasks[BUILD_KNIGHT])%3) {
+                    switch((robotTasks[BUILD_RANGER]+robotTasks[BUILD_MAGE]+robotTasks[BUILD_KNIGHT]+robotTasks[BUILD_WORKER])%6) {
                         case 0:
                             return BUILD_RANGER;
                         case 1:
                             return BUILD_MAGE;
+                        case 5:
+                            return BUILD_MAGE;
                         case 2:
                             return BUILD_KNIGHT;
+                        case 3:
+                            return BUILD_WORKER;
+                        case 4:
+                            return BUILD_WORKER;
                     }
 
                 case Ranger:

@@ -21,10 +21,10 @@ public class Player{
         // Hashsets for the robots we've already seen
         HashSet<Integer> seen = new HashSet<Integer>();
 
-      public int calcHab(
-      public int evalMobility(PlanetMap pm){
-        	return -1;
-        }
+        public int calcHab(
+        public int evalMobility(PlanetMap pm){
+                return -1;
+            }
         //Get info about Earth and Mars
         EarthMap = gc.startingMap(Planet.Earth);
         MarsMap = gc.startingMap(Planet.Mars);
@@ -139,7 +139,7 @@ public class Player{
 
             for(Factory f : myFactories){
               if(f.target == 1)
-                g.buildOrPlace();
+                f.buildOrPlace();
             }
 
             for(Worker w : myWorkers){
@@ -163,17 +163,6 @@ public class Player{
         }
     }
 
-<<<<<<< HEAD
-    void rocketIfPossible();
-    int calcHab();
-    void buildFactories();
-    void agro();
-    void determineResearch();
-
-
-    
-}
-=======
   	void rocketIfPossible();
     int calcHab(){
 
@@ -189,4 +178,3 @@ public class Player{
     void agro();
     void determineResearch();
 }
->>>>>>> 9fd87a22b6550df440efb9a2b6d4e86e2e273937
