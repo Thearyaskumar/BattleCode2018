@@ -43,6 +43,11 @@ public class Player {
             VecUnit units = gc.myUnits();
             for (int i = 0; i < units.size(); i++) {
                 Unit unit = units.get(i);
+                if(unit.unitType()==UnitType.Rocket)
+                    Rocket.oneMove(gc,unit,DEFAULT);
+            }
+            for (int i = 0; i < units.size(); i++) {
+                Unit unit = units.get(i);
 
                 strategy = developStrategy(gc, unit); // That should call {earth, mars}Player.developStrategy()
                 robotTasks[strategy] += 1;
@@ -50,8 +55,6 @@ public class Player {
 
                 switch (unit.unitType()){
                     case Factory: Factory.oneMove(gc, unit, strategy);
-                                  break;
-                    case Rocket: Rocket.oneMove(gc, unit, strategy);
                                   break;
                     case Worker: Worker.oneMove(gc, unit, strategy);
                                   break;
@@ -99,13 +102,15 @@ public class Player {
                         if(robotTasks[BUILD_FACTORY]<gc.startingMap(gc.planet()).getInitial_units().size()/2/2) {
                             return BUILD_FACTORY;
                         } else {
-                            if(gc.researchInfo().getLevel(UnitType.Rocket)>0)
+                            // if(gc.researchInfo().getLevel(UnitType.Rocket)>0) {
+                                
                                 return Math.random()<0.5 ? HARVEST : BUILD_ROCKET;
-                            else
-                                return HARVEST;
+                            //}
+                            // else
+                            //     return HARVEST;
                         }
                     } else
-                        return currentTasks.get(unit.id());
+                        return Math.random() < 0.5 ? currentTasks.get(unit.id()) : BUILD_ROCKET;
                 
                 case Factory:
                     VecUnit units = gc.myUnits();

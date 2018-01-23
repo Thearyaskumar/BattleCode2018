@@ -84,7 +84,7 @@ public class Worker{
 
                 case Player.BUILD_ROCKET:
                 m = gc.allLocationsWithin(unit.location().mapLocation(),1);
-                boolean moveDone = false;
+                moveDone = false;
                 for(pos = 0; pos < m.size(); pos++) {
                     if(gc.hasUnitAtLocation(m.get(pos)) && gc.senseUnitAtLocation(m.get(pos)).unitType()==UnitType.Factory && gc.senseUnitAtLocation(m.get(pos)).structureIsBuilt()==0 && gc.canBuild(unit.id(),gc.senseUnitAtLocation(m.get(pos)).id())) {
                         gc.build(unit.id(),gc.senseUnitAtLocation(m.get(pos)).id());
