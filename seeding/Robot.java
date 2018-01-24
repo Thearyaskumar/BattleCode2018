@@ -15,6 +15,7 @@ public class Robot{
 		int y = targetY - myLoc.getY();
 		/*
 		int orthoLine = -xDisplacement/yDisplacement; //creates orthogonal search line based off of slope of displacement line
+		wait, shouldn't it be 1.0*this? -Ruben
 		*/
 
 	}

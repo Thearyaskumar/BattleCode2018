@@ -1,6 +1,8 @@
 import bc.*;
 import java.util.*;
 public class Factory{
+    Unit unit;
+    GameController gc;
 	public Factory(Unit u, GameController game){
         unit = u;
         gc = game;

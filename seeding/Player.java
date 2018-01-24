@@ -6,6 +6,7 @@ public class Player{
 		//set up variables we'll use later
       	boolean goToMars = false;
       	int[] prod = new int[5];
+      	orbits = gc.orbitPattern();
 
         // Setup hashsets for our units
         HashSet<Worker> myWorkers = new HashSet<Worker>();
@@ -21,7 +22,9 @@ public class Player{
         // Hashsets for the robots we've already seen
         HashSet<Integer> seen = new HashSet<Integer>();
 
-        public int calcHab(
+        public int calcHab(){
+        	return -1
+        }
         public int evalMobility(PlanetMap pm){
                 return -1;
             }
@@ -57,9 +60,8 @@ public class Player{
           	// ROCKETS: robot.target if
           	// -1: unbuilt
           	// 0: unfull garrison
-          	// 1: full garrison - not yet launched
-          	// 2: idling for good launch time
-          	// 3: Launching
+          	// 1: full garrison - idling for good launch time
+          	// 2: Launching
             VecUnit units = gc.myUnits();
             for(int i = 0; i < units.size(); i++){
                 Unit u = units.get(i); // Get the unit
@@ -79,6 +81,7 @@ public class Player{
 
             gc.writeTeamArray(0, gc.round()); // updateTeamArray (to indicate alive)
 
+            //Big mess from here all the way until.......
             if(mapLarge){
                 if(!haveSuicideKnighted){
                   	int pos=0;
@@ -126,14 +129,30 @@ public class Player{
                     }
                   }
             }
-
+            //......here. :(
             // DO THE REST OF THE STUFF HERE
             // Run rocket code
             for(Rocket r : myRockets){
-              	switch(r.target){
-                  	case 0: r.tryLoadGarrison(); break; // Unfull garrison
-                  	case 1: findRocketLandLoc(r); break; // Full garrison
-                  	case 2: r.tryLaunch(); break; // Idling for launch
+              	if (r.fullHealth())
+              		r.setTarget(-1); //in case it got damaged. Maybe have this as -2? -Ruben
+              	switch(r.getTarget()){ //-1-unbuilt, 0-unfull,1-full waiting, 2-launching
+              		case -1: if(r.fullHealth())
+              					r.setTarget(0); //if it's now built, time to work.
+              				 break;
+                  	case 0:  if (r.fullGar())
+                  				r.setTarget(1); //if it's now full, time to idle
+                  			 //In Robot code, if type is what r wants, bug toward r's location and load.
+                  			 break;
+                  	case 1:  for (int i = 0; i < 10; i++){ //don't do this more than 10 times per turn to avoid timeOut
+                  				if (gc.canLaunchRocket(r.id(),r.getLandingLoc()))
+                  					break;
+                  				else
+                  					r.findLandingLoc();
+                  			 if (gc.canLaunchRocket(r.id(),r.getLandingLoc()) && orbit.duration()<orbit.getCenter() || gc.round()>600)
+                  			 	r.setTarget(2)
+                  			 break;
+                  	}
+                  	case 2:  gc.launchRocket(r.id(), r.getLandingLoc()); break; //no reason to test if I can... done in case 1
                 }
 			}
 
