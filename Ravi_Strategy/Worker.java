@@ -10,6 +10,31 @@ public class Worker{
         int pos; 
         if(!unit.location().isInGarrison()) {
             if(gc.planet()==Planet.Mars) {
+                if(gc.senseNearbyUnitsByTeam(unit.location().mapLocation(),1,gc.team()).size()==8) {
+                    m = gc.allLocationsWithin(unit.location().mapLocation(),1);
+                    pos = 0;
+                    while(pos<m.size() && gc.karboniteAt(m.get(pos))<=0) {
+                        pos++;
+                    }
+                    if(pos<m.size() && gc.canHarvest(unit.id(),unit.location().mapLocation().directionTo(m.get(pos))))
+                        gc.harvest(unit.id(),unit.location().mapLocation().directionTo(m.get(pos)));
+                    return;
+                }
+                m = gc.allLocationsWithin(unit.location().mapLocation(),unit.visionRange());
+                for(int i = 0; i < m.size(); i++) {
+                    if(gc.hasUnitAtLocation(m.get(i)) && gc.senseUnitAtLocation(m.get(i)).team()!=unit.team() && gc.senseUnitAtLocation(m.get(i)).unitType()==UnitType.Rocket) {
+                        d = unit.location().mapLocation().directionTo(m.get(i));
+                        pos=0;
+                        while(pos<8 && !gc.canMove(unit.id(),d)) {
+                            d = Math.random()<0.5 ? bc.bcDirectionRotateLeft(d) : bc.bcDirectionRotateRight(d);
+                            pos++;
+                        }
+                        if(pos<8) {
+                            if(gc.canMove(unit.id(),d) && gc.isMoveReady(unit.id()))
+                                gc.moveRobot(unit.id(),d);
+                        }
+                    }
+                }
                 m = gc.allLocationsWithin(unit.location().mapLocation(),1);
                     pos = 0;
                     while(pos<m.size() && gc.karboniteAt(m.get(pos))<=0) {
@@ -17,7 +42,7 @@ public class Worker{
                     }
                     if(pos<m.size() && gc.canHarvest(unit.id(),unit.location().mapLocation().directionTo(m.get(pos)))) {
                         gc.harvest(unit.id(),unit.location().mapLocation().directionTo(m.get(pos)));
-                    } else if(gc.senseNearbyUnitsByTeam(unit.location().mapLocation(),1,gc.team()).size()<5) {
+                    } else if(gc.senseNearbyUnitsByTeam(unit.location().mapLocation(),1,gc.team()).size()<5 || gc.round()>900) {
                         da = Direction.values();
                         shuffleArray(da);
                         for(Direction di:da) {
@@ -28,7 +53,7 @@ public class Worker{
                         }
                     }
                     if(gc.isMoveReady(unit.id())) { //no karbonite...move to new location
-                        m = gc.allLocationsWithin(unit.location().mapLocation(),50);
+                        m = gc.allLocationsWithin(unit.location().mapLocation(),30);
                         pos = 0;
                         for(int i=0; i<m.size(); i++) {
                             if(gc.karboniteAt(m.get(i))>0 && gc.startingMap(gc.planet()).onMap(m.get(pos)))
@@ -63,6 +88,19 @@ public class Worker{
                         }
                     }
             } else {
+                // m = gc.allLocationsWithin(unit.location().mapLocation(),1);
+                // for(pos = 0; pos < m.size(); pos++) {
+                //     if(gc.hasUnitAtLocation(m.get(pos)) && gc.senseUnitAtLocation(m.get(pos)).unitType()==UnitType.Factory && gc.senseUnitAtLocation(m.get(pos)).structureIsBuilt()==0 && gc.canBuild(unit.id(),gc.senseUnitAtLocation(m.get(pos)).id())) {
+                //         gc.build(unit.id(),gc.senseUnitAtLocation(m.get(pos)).id());
+                //         break;
+                //     }
+                // }
+                // for(pos = 0; pos < m.size(); pos++) {
+                //     if(gc.hasUnitAtLocation(m.get(pos)) && gc.senseUnitAtLocation(m.get(pos)).unitType()==UnitType.Rocket && gc.senseUnitAtLocation(m.get(pos)).structureIsBuilt()==0 && gc.canBuild(unit.id(),gc.senseUnitAtLocation(m.get(pos)).id())) {
+                //         gc.build(unit.id(),gc.senseUnitAtLocation(m.get(pos)).id());
+                //         break;
+                //     }
+                // }
                 switch (strategy) {
                     case Player.HARVEST:
                         m = gc.allLocationsWithin(unit.location().mapLocation(),1);
@@ -155,7 +193,7 @@ public class Worker{
                                 if(gc.canBlueprint(unit.id(),UnitType.Rocket,di)) {  
                                     gc.blueprint(unit.id(),UnitType.Rocket,di);
                                     moveDone = true;
-                                    System.out.println("moveDone");
+                                    //System.out.println("moveDone");
                                     break;
                                 }
                             }

@@ -10,7 +10,7 @@ public class Robot{
         MapLocation locID;
         Team otherTeam = gc.team()==Team.Blue ? Team.Red : Team.Blue;
         Veci32 teamArray = gc.getTeamArray(gc.planet());
-        if(!unit.location().isInGarrison() && gc.senseNearbyUnitsByType(unit.location().mapLocation(),1,UnitType.Rocket).size()==0) {
+        if(!unit.location().isInGarrison() && !(gc.senseNearbyUnitsByType(unit.location().mapLocation(),1,UnitType.Rocket).size()!=0 && unit.location().isOnPlanet(Planet.Earth))) {
             switch (strategy) {
                 case Player.ATTACK:
                     nearby = gc.senseNearbyUnitsByTeam(unit.location().mapLocation(),unit.attackRange(),otherTeam);
@@ -18,14 +18,15 @@ public class Robot{
                         target = nearby.get(0);
                         locID = target.location().mapLocation();
                         for(i = 0; i < teamArray.size() && teamArray.get(i)!=0; i++) {
-                            if(new MapLocation(gc.planet(),teamArray.get(i)/100,teamArray.get(i)%100).isWithinRange(25,locID)) {
+                            if(new MapLocation(gc.planet(),teamArray.get(i)/100,teamArray.get(i)%100).isWithinRange(6,locID)) {
                                 locID = null;
                                 break;
                             }
                         }
-                        if(locID==null && i<teamArray.size())
+                        if(locID!=null && i<teamArray.size()) {
                             gc.writeTeamArray(i,target.location().mapLocation().getX()*100+target.location().mapLocation().getY());
-                        for(i = 0; i < nearby.size(); i++) {
+                        }
+                            for(i = 0; i < nearby.size(); i++) {
                             if(nearby.get(i).unitType()==UnitType.Mage && gc.canAttack(unit.id(),nearby.get(i).id())) {
                                 gc.attack(unit.id(),nearby.get(i).id());
                                 break;

@@ -22,9 +22,11 @@ public class Rocket{
         } else {
             for(Direction d: Direction.values()){
                 try{
-                    Unit u = gc.senseUnitAtLocation(unit.location().mapLocation().add(d));
-                    //System.out.println("loaded unit onto rocket");
-                    gc.load(unit.id(), u.id());
+                    if(gc.hasUnitAtLocation(unit.location().mapLocation().add(d))) {
+                        Unit u = gc.senseUnitAtLocation(unit.location().mapLocation().add(d));
+                        //System.out.println("loaded unit onto rocket");
+                        gc.load(unit.id(), u.id());
+                    }
                 }
                 catch(Exception e){
                     //e.printStackTrace();

@@ -107,7 +107,7 @@ public class Player {
             SLOW_PRODUCTION=true;
         else
             SLOW_PRODUCTION=false;
-        //System.out.println(gc.karbonite()); //print karbonite amount to console
+        //System.out.println(gc.getTeamArray(Planet.Earth));
             switch (unit.unitType()){
                 case Worker:
                     if(!currentTasks.containsKey(unit.id()) || currentTasks.get(unit.id())==DEFAULT || gc.round()%10==0) {
@@ -135,7 +135,7 @@ public class Player {
                         if(workerCount<=5)
                             return BUILD_WORKER;
                     }
-                    switch((robotTasks[BUILD_RANGER]+robotTasks[BUILD_MAGE]+robotTasks[BUILD_KNIGHT]+robotTasks[BUILD_WORKER])%6) {
+                    switch((robotTasks[BUILD_RANGER]+robotTasks[BUILD_MAGE]+robotTasks[BUILD_KNIGHT]+robotTasks[BUILD_WORKER])%7) {
                         case 0:
                             return BUILD_RANGER;
                         case 1:
@@ -148,15 +148,18 @@ public class Player {
                             return BUILD_WORKER;
                         case 4:
                             return BUILD_WORKER;
+                        case 6:
+                            return BUILD_RANGER;
                     }
 
                 case Ranger:
                     if(!currentTasks.containsKey(unit.id()) || currentTasks.get(unit.id())==DEFAULT) {
-                        if(robotTasks[DEFEND]%2==1) {
-                            return ATTACK;
-                        } else {
-                            return DEFEND;
-                        }
+                        // if(robotTasks[DEFEND]%2==1) {
+                        //     return ATTACK;
+                        // } else {
+                        //     return DEFEND;
+                        // }
+                        return ATTACK;
                     } else
                         return currentTasks.get(unit.id());
 
