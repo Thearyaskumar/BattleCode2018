@@ -29,10 +29,15 @@ public class Ranger extends Robot{
 			for(int i = 0; i < visibleEnemies.size(); i++) {
 				if(!Player.isInEnemyLocs(visibleEnemies.get(i).location().mapLocation())) {
 					Player.addEnemyLoc(visibleEnemies.get(i).location().mapLocation());
-					if(gc.isAttackReady(unit.id()) && gc.canAttack(unit.id(), visibleEnemies.get(i).id())) {
-						gc.attack(unit.id(), visibleEnemies.get(i).id());
-					}
+				}
+				if(gc.isAttackReady(unit.id()) && gc.canAttack(unit.id(), visibleEnemies.get(i).id())) {
+					gc.attack(unit.id(), visibleEnemies.get(i).id());
+				}
 			}
+
+			//choose target if target is null
+			if(moveTarget==null)
+				target = Player.
 		}
 	}
 }
