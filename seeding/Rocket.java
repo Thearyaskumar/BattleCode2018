@@ -35,7 +35,7 @@ public class Rocket{
 		return landingLoc;
 	}
 	public void findLandingLoc(){
-		landingLoc = new MapLocation(Planet.Mars, (int)(Math.random()*gc.startingMap(Planet.Mars).getWidth()), (int)(Math.random()*gc.startingMap(Planet.Mars).getHeight()));;
+		landingLoc = new MapLocation(Planet.Mars, (int)(Math.random()*gc.startingMap(Planet.Mars).getWidth()), (int)(Math.random()*gc.startingMap(Planet.Mars).getHeight()));
 	}
 	public boolean fullHealth(){
 		return unit.health()!=unit.maximumHealth();

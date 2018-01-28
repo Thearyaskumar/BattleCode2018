@@ -39,8 +39,19 @@ public class Ranger extends Robot{
 			}
 
 			//choose target if target is null
-			if(moveTarget==null)
+			if(moveTarget==null || visibleEnemies.size()==0 && !Player.getEnemyLocs().isEmpty())
 				target = random.choice(Player.getEnemyLocs());
+			else if(moveTarget==null)
+				target = new MapLocation(gc.planet(), (int)(Math.random()*gc.startingMap(gc.planet()).getWidth()), (int)(Math.random()*gc.startingMap(gc.planet()).getHeight()));
+
+			if(!gc.isAttackReady(unit.id()) && gc.isMoveReady(unit.id())) {
+				if(target!=null) {
+					Direction d = bug2(target);
+					if(gc.canMove(unit.id(),d)) {
+						gc.moveRobot(unit.id(), d);
+					}
+				}
+			}
 		}
 	}
 }
