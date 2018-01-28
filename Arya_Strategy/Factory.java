@@ -7,7 +7,7 @@ public class Factory{
         gc = game;
     }
 
-    public void build(UnitType ut){
+    public void buildOrPlace(UnitType ut){
         /* Begin building units if you are able to */
         if (!gc.canProduceRobot(unit.id(), ut))
             return; // Can't produce robot
