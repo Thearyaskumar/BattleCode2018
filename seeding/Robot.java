@@ -6,6 +6,9 @@ public class Robot{
 	*/
 	public Unit unit;
 	public GameController gc;
+	public void randomBug(){
+		//Ravi's random bug code
+	}
 	public void bug2(MapLocation targetMapLoc){
 
 		//given target loc
