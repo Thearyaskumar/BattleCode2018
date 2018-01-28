@@ -202,7 +202,8 @@ public class Player{
                                     if(gc.hasUnitAtLocation(r.location().mapLocation().add(d))) {
                                       try{Unit u = gc.senseUnitAtLocation(r.location().mapLocation().add(d));}catch(Exception e){}
                                         //System.out.println("loaded unit onto rocket");
-                                      try{gc.load(r.id(), u.id());}catch(Exception e){}
+                                        if(!u.unitType==UnitType.Worker || gc.round>720)
+                                            try{gc.load(r.id(), u.id());}catch(Exception e){}
                                     }
                                   	if(r.fullGar())
                                       break;
@@ -212,11 +213,11 @@ public class Player{
                                 }
                             }
                   			 
-                  			 if (r.fullGar() || r.health()<40)
+                  			 if (r.fullGar() || r.health()<40 || gc.round()>745)
                                try{r.setTarget(1);}catch(Exception e){} //if it's now full, time to idle
                   			 //In Robot code, if type is what r wants, bug toward r's location and load.
                   			 break;
-                  	case 1:  for (int i = 0; i < 5; i++){ //don't do this more than 10 times per turn to avoid timeOut
+                  	case 1:  for (int i = 0; i < 5; i++){ //don't do this more than 5 times per turn to avoid timeOut
                   				if (gc.canLaunchRocket(r.id(),r.getLandingLoc()))
                   					break;
                   				else
