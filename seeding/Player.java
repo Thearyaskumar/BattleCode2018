@@ -1,11 +1,7 @@
 import bc.*;
 import java.util.*;
 public class Player{
-<<<<<<< HEAD
-  	public static HashSet<MapLocation> enemyLocs = new HashSet<MapLocation>();
-=======
   	    public static HashSet<MapLocation> enemyLocs = new HashSet<MapLocation>();
->>>>>>> 5d4f348b63d58fcf32292877aa44afcf831c1770
   
   public static HashSet<MapLocation> getEnemyLocs() {
     return enemyLocs;
@@ -115,13 +111,10 @@ public class Player{
           	// 2: Launching
             // 3: launched
           
-<<<<<<< HEAD
-=======
             //WORKER:
           	// 0: default
           	// 1: build a factory
           
->>>>>>> 5d4f348b63d58fcf32292877aa44afcf831c1770
           	myFactories.clear();
           	myRockets.clear();
             myWorkers.clear();
@@ -220,30 +213,13 @@ public class Player{
                             }
                   			 
                   			 if (r.fullGar() || r.health()<40)
-<<<<<<< HEAD
-                  				r.setTarget(1); //if it's now full, time to idle
-=======
                                try{r.setTarget(1);}catch(Exception e){} //if it's now full, time to idle
->>>>>>> 5d4f348b63d58fcf32292877aa44afcf831c1770
                   			 //In Robot code, if type is what r wants, bug toward r's location and load.
                   			 break;
                   	case 1:  for (int i = 0; i < 5; i++){ //don't do this more than 10 times per turn to avoid timeOut
                   				if (gc.canLaunchRocket(r.id(),r.getLandingLoc()))
                   					break;
                   				else
-<<<<<<< HEAD
-                  					r.findLandingLoc();
-                  			 if (gc.canLaunchRocket(r.id(),r.getLandingLoc()) && (r.health()<40||orbit.duration()<orbit.getCenter()||gc.round()>600))
-                  			 	r.setTarget(2)
-                  			 break;
-                  	}
-                  	case 2:  gc.launchRocket(r.id(), r.getLandingLoc()); 
-                  			 r.setTarget(3);
-                             break; //no reason to test if I can... done in case 1
-                  	case 3:  if (r.emptyGar())
-                      			gc.disintegrateUnit(r.id());
-                  				myRockets.remove(r);
-=======
                                   try{r.findLandingLoc();}catch(Exception e){}
                   			 if (gc.canLaunchRocket(r.id(),r.getLandingLoc()) && (r.health()<40||orbit.duration()<orbit.getCenter()||gc.round()>600))
                                try{r.setTarget(2);}catch(Exception e){}
@@ -255,7 +231,6 @@ public class Player{
                   	case 3:  if (r.emptyGar())
                       try{gc.disintegrateUnit(r.id());}catch(Exception e){}
                   try{myRockets.remove(r);}catch(Exception e){}
->>>>>>> 5d4f348b63d58fcf32292877aa44afcf831c1770
                   			else{
                               if(r.location().isOnPlanet(Planet.Mars)) {
                                 for(Direction d : Direction.values()) {
@@ -268,20 +243,12 @@ public class Player{
                 }
 			}
 			if (gc.getTimeLeftMs()<5)
-<<<<<<< HEAD
-              gc.nextTurn();
-=======
               try{gc.nextTurn();}catch(Exception e){}
->>>>>>> 5d4f348b63d58fcf32292877aa44afcf831c1770
             for(Factory f : myFactories){
               try{f.oneRound();}catch(Exception e){}
             }
 			if (gc.getTimeLeftMs()<5)
-<<<<<<< HEAD
-              gc.nextTurn();
-=======
               try{gc.nextTurn();}catch(Exception e){}
->>>>>>> 5d4f348b63d58fcf32292877aa44afcf831c1770
             for(Worker w : myWorkers){
               int task = 0;
               if(gc.round()%10 == 0){
@@ -293,15 +260,9 @@ public class Player{
               }
             }
             if (gc.getTimeLeftMs()<5)
-<<<<<<< HEAD
-              gc.nextTurn();
-			for(Ranger r : myRangers){
-              r.oneRound();
-=======
               try{gc.nextTurn();}catch(Exception e){}
 			for(Ranger r : myRangers){
               try{r.oneRound();}catch(Exception e){}
->>>>>>> 5d4f348b63d58fcf32292877aa44afcf831c1770
 			}
             if (gc.getTimeLeftMs()<5)
               try{gc.nextTurn();}catch(Exception e){}
