@@ -9,15 +9,10 @@ public class Robot{
 	public void randomBug(){
 		//Ravi's random bug code
 	}
-<<<<<<< HEAD
-	public Direction bug2(Planet planet, MapLocation targetMapLoc){
-=======
-	public void bug2(MapLocation targetMapLoc){
->>>>>>> 9c7605704491cfe7ed6b9be5404d036dc8500477
 
+	public void bug2(MapLocation targetMapLoc){
 		//given target loc
 		//next step towards that direction
-		boolean above; //if target is above or below orthogonal search line
 		Location myLoc = unit.location();
 		if (!myLoc.isOnMap()){
 			return; //basically, if it's not on a map, don't do anything
@@ -25,7 +20,6 @@ public class Robot{
 		MapLocation myMapLoc = myLoc.mapLocation();
 		int targetX = targetMapLoc.getX();
 		int targetY = targetMapLoc.getY();
-<<<<<<< HEAD
 		int dx = targetX - myMapLoc.getX();
 		int dy = targetY - myMapLoc.getY();
 		if(dx > 0 && dy > 0){
@@ -263,10 +257,6 @@ public class Robot{
 			return;
 		}
 	}
-=======
-		int x = targetX - myMapLoc.getX();
-		int y = targetY - myMapLoc.getY();
->>>>>>> 9c7605704491cfe7ed6b9be5404d036dc8500477
 		/*
 		int orthoLine = -xDisplacement/yDisplacement; //creates orthogonal search line based off of slope of displacement line
 		wait, shouldn't it be 1.0*this? -Ruben
