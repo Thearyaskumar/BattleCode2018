@@ -19,6 +19,9 @@ public class Rocket{
 		//else anything goes, just get off Earth fast!
 		target = -1;
 	}
+	public Location getLoc(){
+		return unit.location();
+	}
 	public int getTarget(){
 		return target;
 	}
@@ -34,8 +37,14 @@ public class Rocket{
 	public boolean fullHealth(){
 		return unit.health()!=unit.maximumHealth();
 	}
+	public long health(){
+		return unit.health()
+	}
 	public boolean fullGar(){
 		return unit.structureGarrison().size()==unit.structureMaxCapacity();
+	}
+	public boolean emptyGar(){
+		return unit.structureGarrison().size()==0;
 	}
 	public int id(){
 		return unit.id();
