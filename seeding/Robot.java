@@ -10,7 +10,7 @@ public class Robot{
 		//Ravi's random bug code
 	}
 
-	public void bug2(MapLocation targetMapLoc){
+	public Direction bug2(MapLocation targetMapLoc){
 		//given target loc
 		//next step towards that direction
 		Location myLoc = unit.location();
