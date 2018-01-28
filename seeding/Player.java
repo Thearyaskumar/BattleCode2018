@@ -1,15 +1,15 @@
 import bc.*;
 import java.util.*;
 public class Player{
-    public HashSet<MapLocation> enemyLocs = new HashSet<MapLocation>();
+    public static HashSet<MapLocation> enemyLocs = new HashSet<MapLocation>();
   
-  public HashSet<MapLocation> getEnemyLocs() {
+  public static HashSet<MapLocation> getEnemyLocs() {
     return enemyLocs;
   }
-  public boolean isInEnemyLocs(MapLocation m) {
+  public static boolean isInEnemyLocs(MapLocation m) {
     return enemyLocs.contains(m);
   }
-  public void addEnemyLoc(MapLocation m) {
+  public static void addEnemyLoc(MapLocation m) {
     enemyLocs.add(m);
   }
   public static void main(String[] args){
