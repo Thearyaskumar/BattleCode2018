@@ -36,46 +36,49 @@ public class Player {
         currentTasks = new HashMap<Integer,Integer>();
 
         while (true) {
-
             try {
-            Arrays.fill(robotTasks,0);
+                Arrays.fill(robotTasks,0);
 
-            // VecUnit is a class that you can think of as similar to ArrayList<Unit>, but immutable.
-            VecUnit units = gc.myUnits();
-            for (int i = 0; i < units.size(); i++) {
-                Unit unit = units.get(i);
-                if(unit.unitType()==UnitType.Rocket)
-                    Rocket.oneMove(gc,unit,DEFAULT);
-            }
-            for (int i = 0; i < units.size(); i++) {
-                Unit unit = units.get(i);
-
-                strategy = developStrategy(gc, unit); // That should call {earth, mars}Player.developStrategy()
-                robotTasks[strategy] += 1;
-                currentTasks.put(unit.id(),strategy);
-                
-                try {
-                    switch (unit.unitType()){
-                        case Factory: Factory.oneMove(gc, unit, strategy);
-                                    break;
-                        case Worker: Worker.oneMove(gc, unit, strategy);
-                                    break;
-                        case Ranger: Robot.oneMove(gc, unit, strategy);
-                                    break;
-                        case Mage: Robot.oneMove(gc, unit, strategy);
-                                    break;
-                        case Knight: Robot.oneMove(gc, unit, strategy);
-                                    break;
-                        case Healer: Robot.oneMove(gc, unit, strategy);
-                                    break;
-                    }
-                } catch(Exception e) {
-                    e.printStackTrace();
+                // VecUnit is a class that you can think of as similar to ArrayList<Unit>, but immutable.
+                VecUnit units = gc.myUnits();
+                for (int i = 0; i < units.size(); i++) {
+                    Unit unit = units.get(i);
+                    if(unit.unitType()==UnitType.Rocket)
+                        Rocket.oneMove(gc,unit,DEFAULT);
                 }
+                for (int i = 0; i < units.size(); i++) {
+                    if(gc.getTimeLeftMs()<5) {
+                        gc.nextTurn();
+                        break;
+                    }
+                    Unit unit = units.get(i);
+
+                    strategy = developStrategy(gc, unit); // That should call {earth, mars}Player.developStrategy()
+                    robotTasks[strategy] += 1;
+                    currentTasks.put(unit.id(),strategy);
+                    
+                    try {
+                        switch (unit.unitType()){
+                            case Factory: Factory.oneMove(gc, unit, strategy);
+                                        break;
+                            case Worker: Worker.oneMove(gc, unit, strategy);
+                                        break;
+                            case Ranger: Robot.oneMove(gc, unit, strategy);
+                                        break;
+                            case Mage: Robot.oneMove(gc, unit, strategy);
+                                        break;
+                            case Knight: Robot.oneMove(gc, unit, strategy);
+                                        break;
+                            case Healer: Robot.oneMove(gc, unit, strategy);
+                                        break;
+                        }
+                    } catch(Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            } catch(Exception e) {
+                e.printStackTrace();
             }
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
             // Submit the actions we've done, and wait for our next turn.
             gc.nextTurn();
         }
