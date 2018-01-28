@@ -22,6 +22,9 @@ public class Rocket{
 	public Location getLoc(){
 		return unit.location();
 	}
+	public ArrayList<UnitType> wanted(){
+		return wanted;
+	}
 	public int getTarget(){
 		return target;
 	}
