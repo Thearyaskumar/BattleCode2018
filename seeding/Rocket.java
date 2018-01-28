@@ -1,11 +1,11 @@
 import bc.*;
 import java.util.*;
 public class Rocket{
-	Unit unit;
-	GameController gc;
-	ArrayList<UnitType> wanted;
-	int target;
-	MapLocation landingLoc;
+	private Unit unit;
+	private GameController gc;
+	private ArrayList<UnitType> wanted;
+	private int target;
+	private MapLocation landingLoc;
 	public Rocket(Unit u, GameController game){
 		unit = u;
 		gc = game;
@@ -14,7 +14,7 @@ public class Rocket{
 		round = gc.round();//decide what robots the rocket wants based on the round number
 		if (round<250)
 			wanted.addAll(Arrays.asList(UnitType.Mage, UnitType.Worker, UnitType.Knight));
-		if (round<500)
+		else if (round<500)
 			wanted.addAll(Arrays.asList(UnitType.Mage, UnitType.Mage, UnitType.Worker, UnitType.worker, UnitType.Knight));
 		//else anything goes, just get off Earth fast!
 		target = -1;
