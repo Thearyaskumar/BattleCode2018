@@ -4,10 +4,12 @@ public class Ranger extends Robot{
 	private Unit unit;
 	private GameController gc;
 	private MapLocation moveTarget;
+	private Random random;
 
 	public Ranger(Unit u, GameController gameController){
 		unit = u;
 		gc = gameController;
+		random = new Random();
 	}
 
 	void oneRound() {
@@ -18,6 +20,7 @@ public class Ranger extends Robot{
 					if(nearbyRockets.get(i).structureGarrison().size()<nearbyRockets.get(i).structureMaxCapacity()) {
 						moveTarget=unit.location().mapLocation();
 						break;
+					}
 				}
 			}
 			
@@ -37,7 +40,7 @@ public class Ranger extends Robot{
 
 			//choose target if target is null
 			if(moveTarget==null)
-				target = Player.
+				target = random.choice(Player.getEnemyLocs());
 		}
 	}
 }
