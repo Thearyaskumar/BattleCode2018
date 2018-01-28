@@ -1,7 +1,11 @@
 import bc.*;
 import java.util.*;
 public class Player{
+<<<<<<< HEAD
   	public static HashSet<MapLocation> enemyLocs = new HashSet<MapLocation>();
+=======
+  	    public static HashSet<MapLocation> enemyLocs = new HashSet<MapLocation>();
+>>>>>>> 5d4f348b63d58fcf32292877aa44afcf831c1770
   
   public static HashSet<MapLocation> getEnemyLocs() {
     return enemyLocs;
@@ -111,6 +115,13 @@ public class Player{
           	// 2: Launching
             // 3: launched
           
+<<<<<<< HEAD
+=======
+            //WORKER:
+          	// 0: default
+          	// 1: build a factory
+          
+>>>>>>> 5d4f348b63d58fcf32292877aa44afcf831c1770
           	myFactories.clear();
           	myRockets.clear();
             myWorkers.clear();
@@ -196,9 +207,9 @@ public class Player{
                             for(Direction d: Direction.values()){
                                 try{
                                     if(gc.hasUnitAtLocation(r.location().mapLocation().add(d))) {
-                                        Unit u = gc.senseUnitAtLocation(r.location().mapLocation().add(d));
+                                      try{Unit u = gc.senseUnitAtLocation(r.location().mapLocation().add(d));}catch(Exception e){}
                                         //System.out.println("loaded unit onto rocket");
-                                        gc.load(r.id(), u.id());
+                                      try{gc.load(r.id(), u.id());}catch(Exception e){}
                                     }
                                   	if(r.fullGar())
                                       break;
@@ -209,13 +220,18 @@ public class Player{
                             }
                   			 
                   			 if (r.fullGar() || r.health()<40)
+<<<<<<< HEAD
                   				r.setTarget(1); //if it's now full, time to idle
+=======
+                               try{r.setTarget(1);}catch(Exception e){} //if it's now full, time to idle
+>>>>>>> 5d4f348b63d58fcf32292877aa44afcf831c1770
                   			 //In Robot code, if type is what r wants, bug toward r's location and load.
                   			 break;
                   	case 1:  for (int i = 0; i < 5; i++){ //don't do this more than 10 times per turn to avoid timeOut
                   				if (gc.canLaunchRocket(r.id(),r.getLandingLoc()))
                   					break;
                   				else
+<<<<<<< HEAD
                   					r.findLandingLoc();
                   			 if (gc.canLaunchRocket(r.id(),r.getLandingLoc()) && (r.health()<40||orbit.duration()<orbit.getCenter()||gc.round()>600))
                   			 	r.setTarget(2)
@@ -227,11 +243,24 @@ public class Player{
                   	case 3:  if (r.emptyGar())
                       			gc.disintegrateUnit(r.id());
                   				myRockets.remove(r);
+=======
+                                  try{r.findLandingLoc();}catch(Exception e){}
+                  			 if (gc.canLaunchRocket(r.id(),r.getLandingLoc()) && (r.health()<40||orbit.duration()<orbit.getCenter()||gc.round()>600))
+                               try{r.setTarget(2);}catch(Exception e){}
+                  			 break;
+                  	}
+                  	case 2:  gc.launchRocket(r.id(), r.getLandingLoc()); 
+                  try{r.setTarget(3);}catch(Exception e){}
+                             break; //no reason to test if I can... done in case 1
+                  	case 3:  if (r.emptyGar())
+                      try{gc.disintegrateUnit(r.id());}catch(Exception e){}
+                  try{myRockets.remove(r);}catch(Exception e){}
+>>>>>>> 5d4f348b63d58fcf32292877aa44afcf831c1770
                   			else{
                               if(r.location().isOnPlanet(Planet.Mars)) {
                                 for(Direction d : Direction.values()) {
                                     if(gc.canUnload(r.id(),d))
-                                        gc.unload(r.id(),d);
+                                      try{gc.unload(r.id(),d);}catch(Exception e){}
                                 }
                               }
                             }
@@ -239,34 +268,55 @@ public class Player{
                 }
 			}
 			if (gc.getTimeLeftMs()<5)
+<<<<<<< HEAD
               gc.nextTurn();
+=======
+              try{gc.nextTurn();}catch(Exception e){}
+>>>>>>> 5d4f348b63d58fcf32292877aa44afcf831c1770
             for(Factory f : myFactories){
-              f.oneRound();
+              try{f.oneRound();}catch(Exception e){}
             }
 			if (gc.getTimeLeftMs()<5)
+<<<<<<< HEAD
               gc.nextTurn();
+=======
+              try{gc.nextTurn();}catch(Exception e){}
+>>>>>>> 5d4f348b63d58fcf32292877aa44afcf831c1770
             for(Worker w : myWorkers){
-              w.oneRound();
+              int task = 0;
+              if(gc.round()%10 == 0){
+              ////////////TODO: IMPLEMENT TASK (see guide above)
+                if(myFactories.size() < 3 && w.location.isOnPlanet(Planet.Earth)){
+                  task = 1;
+                }
+                try{w.oneRound(task);}catch(Exception e){
+              }
             }
             if (gc.getTimeLeftMs()<5)
+<<<<<<< HEAD
               gc.nextTurn();
 			for(Ranger r : myRangers){
               r.oneRound();
+=======
+              try{gc.nextTurn();}catch(Exception e){}
+			for(Ranger r : myRangers){
+              try{r.oneRound();}catch(Exception e){}
+>>>>>>> 5d4f348b63d58fcf32292877aa44afcf831c1770
 			}
             if (gc.getTimeLeftMs()<5)
-              gc.nextTurn();
+              try{gc.nextTurn();}catch(Exception e){}
             for(Mage m : myMages){
-              m.oneRound();
+              try{m.oneRound();}catch(Exception e){}
             }
             if (gc.getTimeLeftMs()<5)
-              gc.nextTurn();
+              try{gc.nextTurn();}catch(Exception e){}
             for(Healer h : myHealers){
-              h.oneRound();
+              try{h.oneRound();}catch(Exception e){}
             }
             if (gc.getTimeLeftMs()<5)
-              gc.nextTurn();
+              try{gc.nextTurn();}catch(Exception e){}
             for(Knight k : myKnights){
-              k.oneRound();
+              try{k.oneRound();}catch(Exception e){}
             }
             gc.nextTurn();
         }
