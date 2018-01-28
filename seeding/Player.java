@@ -1,13 +1,24 @@
 import bc.*;
 import java.util.*;
 public class Player{
-	public static void main(String[] args){
+    public HashSet<MapLocation> enemyLocs = new HashSet<MapLocation>();
+  
+  public HashSet<MapLocation> getEnemyLocs() {
+    return enemyLocs;
+  }
+  public boolean isInEnemyLocs(MapLocation m) {
+    return enemyLocs.contains(m);
+  }
+  public void addEnemyLoc(MapLocation m) {
+    enemyLocs.add(m);
+  }
+  public static void main(String[] args){
         GameController gc = new GameController();
-		//set up variables we'll use later
-      	boolean goToMars = false;
-      	int[] prod = new int[5];
-      	orbits = gc.orbitPattern();
-
+    //set up variables we'll use later
+        //boolean goToMars = false;
+        //int[] prod = new int[5];
+        OrbitPattern orbits = gc.orbitPattern();
+    
         // Setup hashsets for our units
         HashSet<Worker> myWorkers = new HashSet<Worker>();
         HashSet<Knight> myKnights = new HashSet<Knight>();
@@ -17,86 +28,129 @@ public class Player{
         HashSet<Factory> myFactories = new HashSet<Factory>();
         HashSet<Rocket> myRockets = new HashSet<Rocket>();
 
-        UnitType[] attackPriority = [UnitType.Factory,UnitType.Rocket,UnitType.Mage,UnitType.Worker,UnitType.Ranger,UnitType.Knight,UnitType.Healer];
+        //UnitType[] attackPriority = [UnitType.Factory,UnitType.Rocket,UnitType.Mage,UnitType.Worker,UnitType.Ranger,UnitType.Knight,UnitType.Healer];
 
-        // Hashsets for the robots we've already seen
-        HashSet<Integer> seen = new HashSet<Integer>();
-
-        public int calcHab(){
-        	return -1
+        /*public int calcHab(){
+          return -1
         }
         public int evalMobility(PlanetMap pm){
                 return -1;
-            }
+        }*/
+        public void determineResearch(boolean EarthIsLarge){
+          if (EarthIsLarge){
+              gc.queueResearch(UnitType.Worker); //25
+              gc.queueResearch(UnitType.Mage);//25
+              gc.queueResearch(UnitType.Ranger); //25
+              gc.queueResearch(UnitType.Rocket); //50
+              gc.queueResearch(UnitType.Mage);//75
+              gc.queueResearch(UnitType.Worker); //75
+              gc.queueResearch(UnitType.Worker); //75
+              gc.queueResearch(UnitType.Worker); //75
+              gc.queueResearch(UnitType.Rocket); //100
+              gc.queueResearch(UnitType.Rocket); //100
+              gc.queueResearch(UnitType.Mage); //100
+              gc.queueResearch(UnitType.Healer); //25
+              gc.queueResearch(UnitType.Ranger); //100
+              gc.queueResearch(UnitType.Healer); //100
+              gc.queueResearch(UnitType.Knight); //25
+              gc.QueueResearch(UnitType.Knight); //75
+          }else{
+              gc.queueResearch(UnitType.Mage); //25
+              gc.queueResearch(UnitType.Mage); //75
+              gc.queueResearch(UnitType.Ranger);//25
+              gc.queueResearch(UnitType.Worker); //25
+              gc.queueResearch(UnitType.Mage); //100
+              gc.queueResearch(UnitType.Healer); //25
+              gc.queueResearch(UnitType.Healer); //100
+              gc.queueResearch(UnitType.Knight); //25
+              gc.queueResearch(UnitType.Rocket); //50
+              gc.queueResearch(UnitType.Rocket); //100
+              gc.queueResearch(UnitType.Ranger); //100
+              gc.queueResearch(UnitType.Knight); //75
+              gc.queueResearch(UnitType.Knight); //100
+              gc.queueResearch(UnitType.Mage); //75
+              gc.queueResearch(UnitType.Healer) //100
+          }
+        }
         //Get info about Earth and Mars
         EarthMap = gc.startingMap(Planet.Earth);
         MarsMap = gc.startingMap(Planet.Mars);
         EarthSize = EarthMap.getHeight()*EarthMap.getWidth();
         MarsSize = MarsMap.getHeight()*MarsMap.getWidth();
-        EarthMobility = evalMobility(EarthMap);
+        //EarthMobility = evalMobility(EarthMap);
 
         boolean mapLarge = EarthSize > 750 ;
-        boolean haveSuicideKnighted = false;
+        //boolean haveSuicideKnighted = false;
 
+        //queue all research (hardcoded)
+        gc.determineResearch(mapLarge);
         while(1){
+            enemyLocs.clear();
             // First we will add all new units:
 
-          	// INTEGER: robot.target if
-          	// -1: unassigned
+            // INTEGER: robot.target if
+            // -1: unassigned
             // 0: Random Exploration
-          	// 1: Targeted Moving
-          	// 2: Attacking
-          	// 3: Retreating
+            // 1: Targeted Moving
+            // 2: Attacking
+            // 3: Retreating
             // <...> Specialized
 
-          	// FACTORY: robot.target if
-          	// -1: unbuilt
-          	// 0: idle
-          	// 1: Building - see factory queue
+            // FACTORY: robot.target if
+            // -1: unbuilt
+            // 0: idle
+            // 1: Building - see factory queue
 
-          	// Factory.getQueue():
-          	// ArrayList of UnitTypes
+            // Factory.getQueue():
+            // ArrayList of UnitTypes
 
-          	// ROCKETS: robot.target if
-          	// -1: unbuilt
-          	// 0: unfull garrison
-          	// 1: full garrison - idling for good launch time
-          	// 2: Launching
+            // ROCKETS: robot.target if
+            // -1: unbuilt
+            // 0: unfull garrison
+            // 1: full garrison - idling for good launch time
+            // 2: Launching
+            // 3: launched
+          
+            myFactories.clear();
+            myRockets.clear();
+            myWorkers.clear();
+            myMages.clear();
+            myRangers.clear();
+            myKnights.clear();
+            myHealers.clear();  
+            
             VecUnit units = gc.myUnits();
             for(int i = 0; i < units.size(); i++){
                 Unit u = units.get(i); // Get the unit
-                if (!seen.contains(u.id())){ // If we don't recognize it's id
-                    switch(u.unitType()){ // Add it to the respective collection
-                        case Factory: myFactories.add(new Factory(u, gc)); break;
-                        case Rocket:  myRockets.add(new Rocket(u, gc));    break;
-                        case Worker:  myWorkers.add(new Worker(u,gc));     break;
-                        case Mage:    myMages.add(new Mage(u,gc));         break;
-                        case Ranger:  myRangers.add(new Ranger(u,gc));     break;
-                        case Knight:  myKnights.add(new Knight(u,gc));     break;
-                        case Healer:  myHealers.add(new Healer(u,gc));     break;
-                    }
-                    seen.add(u.id()); // We've seen them now
+                switch(u.unitType()){ // Add it to the respective collection
+                    case Factory: myFactories.add(new Factory(u, gc)); break;
+                    case Rocket:  myRockets.add(new Rocket(u, gc));    break;
+                    case Worker:  myWorkers.add(new Worker(u,gc));     break;
+                    case Mage:    myMages.add(new Mage(u,gc));         break;
+                    case Ranger:  myRangers.add(new Ranger(u,gc));     break;
+                    case Knight:  myKnights.add(new Knight(u,gc));     break;
+                    case Healer:  myHealers.add(new Healer(u,gc));     break;
                 }
             }
 
             gc.writeTeamArray(0, gc.round()); // updateTeamArray (to indicate alive)
 
             //Big mess from here all the way until.......
-            if(mapLarge){
+            /*if(mapLarge){
                 if(!haveSuicideKnighted){
-                  	int pos=0;
-                  	UnitType[] unitsToBuild = [UnitType.Worker,UnitType.Mage,UnitType.Ranger,UnitType.Knight];
+                    int pos=0;
+                    UnitType[] unitsToBuild = [UnitType.Worker,UnitType.Mage,UnitType.Ranger,UnitType.Knight];
                     for(Factory f:myFactories) {
-                    	if(f.target==0)
-                          	pos = pos%len(unitsToBuild);
-                     		f.queue(UnitType.Ranger);
+                      if(f.target==0)
+                            pos = pos%len(unitsToBuild);
+                        f.queue(UnitType.Ranger);
                     }
                 }
                 rocketIfPossible();
                 hab = calcHab();
-              	if (!hab){ //or if hab is less than some number
+                if (!hab){ //or if hab is less than some number
                     goToMars = true;
-              	} else if (winning)
+                } else if (winning)
 
                 production = [UnitType.Worker, UnitType.Mage, UnitType.Ranger, UnitType.Knight, UnitType.Healer];
                 gc.queueReseach(UnitType.Rocket);
@@ -104,87 +158,121 @@ public class Player{
                 // AGRO
                 mob = evalMobility();
                 if (mob){
-              		gc.queueResearch(UnitType.Knight);
+                  gc.queueResearch(UnitType.Knight);
                 }else{
-                  	gc.queueResearch(UnitType.Mage);
+                    gc.queueResearch(UnitType.Mage);
 
                 int mobility = evalMobility();
                   if (mobility==1) {
                     for(Factory f:myFactories) {
-                    	if(f.target==0)
-                     		f.queue(UnitType.Knight);
+                      if(f.target==0)
+                        f.queue(UnitType.Knight);
                     }
                   } else if(mobility==0) {
                     boolean needRockets = 5;
                     if(myMages.size()==0)
-                      	needRockets = 0;
+                        needRockets = 0;
                     else if(myRockets.size()>0)
-                    	needRockets = myMages.size()/myRockets.size();
+                      needRockets = myMages.size()/myRockets.size();
                     for(Factory f : myFactories) {
-                    	if(f.target==0)
-                          	if(needRockets>0)
-                     			f.queue(UnitType.Rocket);
-                          	else
-                          		f.queue(UnitType.Mage);
+                      if(f.target==0)
+                            if(needRockets>0)
+                          f.queue(UnitType.Rocket);
+                            else
+                              f.queue(UnitType.Mage);
                     }
                   }
-            }
+            }*/
             //......here. :(
             // DO THE REST OF THE STUFF HERE
             // Run rocket code
             for(Rocket r : myRockets){
-              	if (!r.fullHealth())
-              		r.setTarget(-1); //in case it got damaged. Maybe have this as -2? -Ruben
-              	switch(r.getTarget()){ //-1-unbuilt, 0-unfull,1-full waiting, 2-launching
-              		case -1: if(r.fullHealth())
-              					r.setTarget(0); //if it's now built, time to work.
-              				 break;
-                  	case 0:  //sense all units nearby this rocket
-                  		     //set their bug target to this rocket
-                  			 if (r.fullGar())
-                  				r.setTarget(1); //if it's now full, time to idle
-                  			 //In Robot code, if type is what r wants, bug toward r's location and load.
-                  			 break;
-                  	case 1:  for (int i = 0; i < 5; i++){ //don't do this more than 10 times per turn to avoid timeOut
-                  				if (gc.canLaunchRocket(r.id(),r.getLandingLoc()))
-                  					break;
-                  				else
-                  					r.findLandingLoc();
-                  			 if (gc.canLaunchRocket(r.id(),r.getLandingLoc()) && orbit.duration()<orbit.getCenter() || gc.round()>600)
-                  			 	r.setTarget(2)
-                  			 break;
-                  	}
-                  	case 2:  gc.launchRocket(r.id(), r.getLandingLoc()); break; //no reason to test if I can... done in case 1
+                switch(r.getTarget()){ //-1-unbuilt, 0-unfull,1-full waiting, 2-launching
+                  case -1: if(r.fullHealth())
+                        r.setTarget(0); //if it's now built, time to work.
+                       break;
+                    case 0:  //sense all units nearby this rocket
+                           //set their bug target to this rocket
+                            for(Direction d: Direction.values()){
+                                try{
+                                    if(gc.hasUnitAtLocation(r.location().mapLocation().add(d))) {
+                                        Unit u = gc.senseUnitAtLocation(r.location().mapLocation().add(d));
+                                        //System.out.println("loaded unit onto rocket");
+                                        gc.load(r.id(), u.id());
+                                    }
+                                    if(r.fullGar())
+                                      break;
+                                }
+                                catch(Exception e){
+                                    //e.printStackTrace();
+                                }
+                            }
+                         
+                         if (r.fullGar() || r.health()<40)
+                          r.setTarget(1); //if it's now full, time to idle
+                         //In Robot code, if type is what r wants, bug toward r's location and load.
+                         break;
+                    case 1:  for (int i = 0; i < 5; i++){ //don't do this more than 10 times per turn to avoid timeOut
+                          if (gc.canLaunchRocket(r.id(),r.getLandingLoc()))
+                            break;
+                          else
+                            r.findLandingLoc();
+                         if (gc.canLaunchRocket(r.id(),r.getLandingLoc()) && (r.health()<40||orbit.duration()<orbit.getCenter()||gc.round()>600))
+                          r.setTarget(2)
+                         break;
+                    }
+                    case 2:  gc.launchRocket(r.id(), r.getLandingLoc()); 
+                         r.setTarget(3);
+                             break; //no reason to test if I can... done in case 1
+                    case 3:  if (r.emptyGar())
+                            gc.disintegrateUnit(r.id());
+                          myRockets.remove(r);
+                        else{
+                              if(r.location().isOnPlanet(Planet.Mars)) {
+                                for(Direction d : Direction.values()) {
+                                    if(gc.canUnload(r.id(),d))
+                                        gc.unload(r.id(),d);
+                                }
+                              }
+                            }
+                            break;
                 }
-			}
-
+      }
+      if (gc.getTimeLeftMs()<5)
+              gc.nextTurn();
             for(Factory f : myFactories){
-              if(f.target == 1)
-                f.buildOrPlace();
+              f.oneRound();
             }
-
+      if (gc.getTimeLeftMs()<5)
+              gc.nextTurn();
             for(Worker w : myWorkers){
-              if(w.target == -1)
-                w.target = 0;
               w.oneRound();
             }
-
-            for(Healer h : myHealers){
-              h.oneRound();
-            }
-            for(Knight k : myKnights){
-              k.oneRound();
-            }
+            if (gc.getTimeLeftMs()<5)
+              gc.nextTurn();
+      for(Ranger r : myRangers){
+              r.oneRound();
+      }
+            if (gc.getTimeLeftMs()<5)
+              gc.nextTurn();
             for(Mage m : myMages){
               m.oneRound();
             }
-            for(Ranger r : myRangers){
-              r.oneRound();
+            if (gc.getTimeLeftMs()<5)
+              gc.nextTurn();
+            for(Healer h : myHealers){
+              h.oneRound();
             }
+            if (gc.getTimeLeftMs()<5)
+              gc.nextTurn();
+            for(Knight k : myKnights){
+              k.oneRound();
+            }
+            gc.nextTurn();
         }
     }
 
-  	void rocketIfPossible();
+    /*void rocketIfPossible();
     int calcHab(){
 
     }
@@ -197,5 +285,5 @@ public class Player{
     }
     void buildFactories();
     void agro();
-    void determineResearch();
+    void determineResearch();*/
 }
