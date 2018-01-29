@@ -41,8 +41,8 @@ public class Player{
         //Get info about Earth and Mars
         PlanetMap EarthMap = gc.startingMap(Planet.Earth);
         PlanetMap MarsMap = gc.startingMap(Planet.Mars);
-        int EarthSize = EarthMap.getHeight()*EarthMap.getWidth();
-        int MarsSize = MarsMap.getHeight()*MarsMap.getWidth();
+        long EarthSize = EarthMap.getHeight()*EarthMap.getWidth();
+        long MarsSize = MarsMap.getHeight()*MarsMap.getWidth();
         //EarthMobility = evalMobility(EarthMap);
 
         boolean mapLarge = EarthSize > 750 ;
@@ -83,7 +83,7 @@ public class Player{
           gc.queueResearch(UnitType.Mage); //75
           gc.queueResearch(UnitType.Healer); //100
       }
-        while(1){
+        while(true){
           	enemyLocs.clear();
             // First we will add all new units:
 
@@ -249,7 +249,7 @@ public class Player{
                                     if(gc.hasUnitAtLocation(r.getLoc().mapLocation().add(d))) {
                                         Unit u = gc.senseUnitAtLocation(r.getLoc().mapLocation().add(d));
                                         //System.out.println("loaded unit onto rocket");
-                                        if((!u.unitType()==UnitType.Worker || gc.round()>720)&&gc.canLoad(r.id(), u.id()))
+                                        if((u.unitType()!=UnitType.Worker || gc.round()>700)&&gc.canLoad(r.id(), u.id()))
                                             try{gc.load(r.id(), u.id());}catch(Exception e){}
                                     }
                                   	if(r.fullGar())
@@ -269,7 +269,7 @@ public class Player{
                   					break;
                   				else
                                   try{r.findLandingLoc();}catch(Exception e){}
-                  			 if (gc.canLaunchRocket(r.id(),r.getLandingLoc()) && (r.health()<40||orbit.duration()<orbit.getCenter()||gc.round()>600))
+                  			 if (gc.canLaunchRocket(r.id(),r.getLandingLoc()) && (r.health()<40||orbit.duration(gc.round())<orbit.getCenter()||gc.round()>600))
                                try{r.setTarget(2);}catch(Exception e){}
                   			 break;
                   	}
