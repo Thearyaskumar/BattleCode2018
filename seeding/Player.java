@@ -330,6 +330,7 @@ public class Player{
                }
                try{w.oneRound(task);}
                catch(Exception e){
+                 e.printStackTrace();
                }
             }
          }
