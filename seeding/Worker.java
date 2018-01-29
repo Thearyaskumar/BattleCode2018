@@ -22,18 +22,22 @@ public class Worker extends Robot{
 		if(unit.location().isOnMap()) {
 			if(unit.location().isOnPlanet(Planet.Earth)) { //stuff specific to Earth
 				VecMapLocation m = gc.allLocationsWithin(unit.location().mapLocation(),1);
-                for(pos = 0; pos < m.size(); pos++) {
-                    if(gc.hasUnitAtLocation(m.get(pos)) && gc.senseUnitAtLocation(m.get(pos)).unitType()==UnitType.Factory && gc.senseUnitAtLocation(m.get(pos)).structureIsBuilt()==0 && gc.canBuild(unit.id(),gc.senseUnitAtLocation(m.get(pos)).id())) {
-                        gc.build(unit.id(),gc.senseUnitAtLocation(m.get(pos)).id());
-                        break;
-                    }
-                }
-                for(pos = 0; pos < m.size(); pos++) {
-                    if(gc.hasUnitAtLocation(m.get(pos)) && gc.senseUnitAtLocation(m.get(pos)).unitType()==UnitType.Rocket && gc.senseUnitAtLocation(m.get(pos)).structureIsBuilt()==0 && gc.canBuild(unit.id(),gc.senseUnitAtLocation(m.get(pos)).id())) {
-                        gc.build(unit.id(),gc.senseUnitAtLocation(m.get(pos)).id());
-                        break;
-                    }
-                }
+                // for(pos = 0; pos < m.size(); pos++) {
+                //     if(gc.hasUnitAtLocation(m.get(pos)) && gc.senseUnitAtLocation(m.get(pos)).unitType()==UnitType.Factory && gc.senseUnitAtLocation(m.get(pos)).structureIsBuilt()==0 && gc.canBuild(unit.id(),gc.senseUnitAtLocation(m.get(pos)).id())) {
+                //         gc.build(unit.id(),gc.senseUnitAtLocation(m.get(pos)).id());
+                //         break;
+                //     }
+				// }
+				for(Direction d:Direction.values()) {
+					if(gc.hasUnitAtLocation(unit.location().mapLocation().add(d)) && gc.canBuild(unit.id(),gc.senseUnitAtLocation(unit.location().mapLocation().add(d)).id()))
+						gc.build(unit.id(),gc.senseUnitAtLocation(unit.location().mapLocation().add(d)).id());
+				}
+                // for(pos = 0; pos < m.size(); pos++) {
+                //     if(gc.hasUnitAtLocation(m.get(pos)) && gc.senseUnitAtLocation(m.get(pos)).unitType()==UnitType.Rocket && gc.senseUnitAtLocation(m.get(pos)).structureIsBuilt()==0 && gc.canBuild(unit.id(),gc.senseUnitAtLocation(m.get(pos)).id())) {
+                //         gc.build(unit.id(),gc.senseUnitAtLocation(m.get(pos)).id());
+                //         break;
+                //     }
+                // }
 
 				VecUnit nearbyRockets = gc.senseNearbyUnitsByType(unit.location().mapLocation(), 5, UnitType.Rocket); //go towards nearby rockets
 				for(int i = 0; i < nearbyRockets.size(); i++) {
