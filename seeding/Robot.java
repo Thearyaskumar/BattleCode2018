@@ -4,8 +4,8 @@ public class Robot{
 	/**
 	*bug pathfinding that applies to all robots
 	*/
-	public Unit unit;
-	public GameController gc;
+	private Unit unit;
+	private GameController gc;
 	public void randomBug(){
 		//Ravi's random bug code
 	}
