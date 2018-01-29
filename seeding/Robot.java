@@ -10,6 +10,10 @@ public class Robot{
 		//Ravi's random bug code
 	}
 
+	public int id() {
+		return unit.id();
+	}
+
 	public Direction bug2(MapLocation targetMapLoc){
 		//given target loc
 		//next step towards that direction

@@ -14,6 +14,9 @@ public class Factory{
         gc = game;
         size = gc.startingMap(gc.planet()).getHeight()*gc.startingMap(gc.planet()).getWidth();
     }
+    public int id() {
+        return unit.id();
+    }
     public void build(UnitType ut){
         /* Begin building units if you are able to */
         if (!gc.canProduceRobot(unit.id(), ut))

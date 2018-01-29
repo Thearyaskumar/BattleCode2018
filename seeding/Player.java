@@ -27,6 +27,7 @@ public class Player{
         HashSet<Healer> myHealers = new HashSet<Healer>();
         HashSet<Factory> myFactories = new HashSet<Factory>();
         HashSet<Rocket> myRockets = new HashSet<Rocket>();
+        HashSet<int> seen = new HashSet<int>();
 
         //UnitType[] attackPriority = [UnitType.Factory,UnitType.Rocket,UnitType.Mage,UnitType.Worker,UnitType.Ranger,UnitType.Knight,UnitType.Healer];
 
@@ -113,25 +114,73 @@ public class Player{
           	// 0: default
           	// 1: build a factory
           
-          	myFactories.clear();
-          	myRockets.clear();
-            myWorkers.clear();
-            myMages.clear();
-          	myRangers.clear();
-          	myKnights.clear();
-          	myHealers.clear();	
+          	// myFactories.clear();
+          	// myRockets.clear();
+            // myWorkers.clear();
+            // myMages.clear();
+          	// myRangers.clear();
+          	// myKnights.clear();
+          	// myHealers.clear();	
             
             VecUnit units = gc.myUnits();
+            HashSet<int> thisRound = new HashSet<int>();
             for(int i = 0; i < units.size(); i++){
                 Unit u = units.get(i); // Get the unit
-                switch(u.unitType()){ // Add it to the respective collection
-                    case Factory: myFactories.add(new Factory(u, gc)); break;
-                    case Rocket:  myRockets.add(new Rocket(u, gc));    break;
-                    case Worker:  myWorkers.add(new Worker(u,gc));     break;
-                    case Mage:    myMages.add(new Mage(u,gc));         break;
-                    case Ranger:  myRangers.add(new Ranger(u,gc));     break;
-                    case Knight:  myKnights.add(new Knight(u,gc));     break;
-                    case Healer:  myHealers.add(new Healer(u,gc));     break;
+                thisRound.add(u.id());
+                if(!seen.contains(u.id())) {
+                    seen.add(u.id());
+                    switch(u.unitType()){ // Add it to the respective collection
+                        case Factory: myFactories.add(new Factory(u, gc)); break;
+                        case Rocket:  myRockets.add(new Rocket(u, gc));    break;
+                        case Worker:  myWorkers.add(new Worker(u,gc));     break;
+                        case Mage:    myMages.add(new Mage(u,gc));         break;
+                        case Ranger:  myRangers.add(new Ranger(u,gc));     break;
+                        case Knight:  myKnights.add(new Knight(u,gc));     break;
+                        case Healer:  myHealers.add(new Healer(u,gc));     break;
+                    }
+                }
+            }
+
+            for(Rocket r:myRockets) {
+                if(!thisRound.contains(r.id())) {
+                    myRockets.remove(r);
+                    seen.remove(r.id());
+                }
+            }
+            for(Factory r:myFactories) {
+                if(!thisRound.contains(r.id())) {
+                    myFactories.remove(r);
+                    seen.remove(r.id());
+                }
+            }
+            for(Robot r:myWorkers) {
+                if(!thisRound.contains(r.id())) {
+                    myWorkers.remove(r);
+                    seen.remove(r.id());
+                }
+            }
+            for(Robot r:myHealers) {
+                if(!thisRound.contains(r.id())) {
+                    myHealers.remove(r);
+                    seen.remove(r.id());
+                }
+            }
+            for(Robot r:myKnights) {
+                if(!thisRound.contains(r.id())) {
+                    myKnights.remove(r);
+                    seen.remove(r.id());
+                }
+            }
+            for(Robot r:myRangers) {
+                if(!thisRound.contains(r.id())) {
+                    myRangers.remove(r);
+                    seen.remove(r.id());
+                }
+            }
+            for(Robot r:myMages) {
+                if(!thisRound.contains(r.id())) {
+                    myMages.remove(r);
+                    seen.remove(r.id());
                 }
             }
 
