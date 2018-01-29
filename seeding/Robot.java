@@ -28,28 +28,28 @@ public class Robot{
 		int dy = targetY - myMapLoc.getY();
 		Planet planet = gc.planet();
 		if(dx > 0 && dy > 0){
-			if(gc.startingMap(planet).canMove(unit.id(), Direction.Northeast) > 0){
+			if(gc.canMove(unit.id(), Direction.Northeast)){
 				return Direction.Northeast;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.North) > 0){
+			else if(gc.canMove(unit.id(), Direction.North)){
 				return Direction.North;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.East) > 0){
+			else if(gc.canMove(unit.id(), Direction.East)){
 				return Direction.East;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.Northwest) > 0){
+			else if(gc.canMove(unit.id(), Direction.Northwest)){
 				return Direction.Northwest;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.Southeast) > 0){
+			else if(gc.canMove(unit.id(), Direction.Southeast)){
 				return Direction.Southeast;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.West) > 0){
+			else if(gc.canMove(unit.id(), Direction.West)){
 				return Direction.West;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.South) > 0){
+			else if(gc.canMove(unit.id(), Direction.South)){
 				return Direction.South;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.Southwest) > 0){
+			else if(gc.canMove(unit.id(), Direction.Southwest)){
 				return Direction.Southwest;
 			}
 			else{
@@ -57,28 +57,28 @@ public class Robot{
 			}
 		}
 		else if(dx > 0 && dy< 0){
-			if(gc.startingMap(planet).canMove(unit.id(), Direction.Southeast) > 0){
+			if(gc.canMove(unit.id(), Direction.Southeast)){
 				return Direction.Southeast;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.South) > 0){
+			else if(gc.canMove(unit.id(), Direction.South)){
 				return Direction.South;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.East) > 0){
+			else if(gc.canMove(unit.id(), Direction.East)){
 				return Direction.East;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.Northeast) > 0){
+			else if(gc.canMove(unit.id(), Direction.Northeast)){
 				return Direction.Northeast;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.Southwest) > 0){
+			else if(gc.canMove(unit.id(), Direction.Southwest)){
 				return Direction.Southwest;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.North) > 0){
+			else if(gc.canMove(unit.id(), Direction.North)){
 				return Direction.North;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.West) > 0){
+			else if(gc.canMove(unit.id(), Direction.West)){
 				return Direction.West;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.Northwest) > 0){
+			else if(gc.canMove(unit.id(), Direction.Northwest)){
 				return Direction.Northwest;
 			}
 			else{
@@ -86,28 +86,28 @@ public class Robot{
 			}
 		}
 		else if(dx < 0 && dy < 0){
-			if(gc.startingMap(planet).canMove(unit.id(), Direction.Southwest) > 0){
+			if(gc.canMove(unit.id(), Direction.Southwest)){
 				return Direction.Southwest;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.South) > 0){
+			else if(gc.canMove(unit.id(), Direction.South)){
 				return Direction.South;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.West) > 0){
+			else if(gc.canMove(unit.id(), Direction.West)){
 				return Direction.West;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.Southeast) > 0){
+			else if(gc.canMove(unit.id(), Direction.Southeast)){
 				return Direction.Southeast;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.Northwest) > 0){
+			else if(gc.canMove(unit.id(), Direction.Northwest)){
 				return Direction.Northwest;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.East) > 0){
+			else if(gc.canMove(unit.id(), Direction.East)){
 				return Direction.East;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.North) > 0){
+			else if(gc.canMove(unit.id(), Direction.North)){
 				return Direction.North;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.Northeast) > 0){
+			else if(gc.canMove(unit.id(), Direction.Northeast)){
 				return Direction.Northeast;
 			}
 			else{
@@ -115,28 +115,28 @@ public class Robot{
 			}
 		}
 		else if(dx < 0 && dy > 0){
-			if(gc.startingMap(planet).canMove(unit.id(), Direction.Northwest) > 0){
+			if(gc.canMove(unit.id(), Direction.Northwest)){
 				return Direction.Northwest;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.North) > 0){
+			else if(gc.canMove(unit.id(), Direction.North)){
 				return Direction.North;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.West) > 0){
+			else if(gc.canMove(unit.id(), Direction.West)){
 				return Direction.West;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.Northeast) > 0){
+			else if(gc.canMove(unit.id(), Direction.Northeast)){
 				return Direction.Northeast;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.Southwest) > 0){
+			else if(gc.canMove(unit.id(), Direction.Southwest)){
 				return Direction.Southwest;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.East) > 0){
+			else if(gc.canMove(unit.id(), Direction.East)){
 				return Direction.East;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.South) > 0){
+			else if(gc.canMove(unit.id(), Direction.South)){
 				return Direction.South;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.Southeast) > 0){
+			else if(gc.canMove(unit.id(), Direction.Southeast)){
 				return Direction.Southeast;
 			}
 			else{
@@ -144,28 +144,28 @@ public class Robot{
 			}
 		}
 		else if(dx > 0){
-			if(gc.startingMap(planet).canMove(unit.id(), Direction.East) > 0){
+			if(gc.canMove(unit.id(), Direction.East)){
 				return Direction.East;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.Northeast) > 0){
+			else if(gc.canMove(unit.id(), Direction.Northeast)){
 				return Direction.Northeast;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.Southeast) > 0){
+			else if(gc.canMove(unit.id(), Direction.Southeast)){
 				return Direction.Southeast;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.North) > 0){
+			else if(gc.canMove(unit.id(), Direction.North)){
 				return Direction.North;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.South) > 0){
+			else if(gc.canMove(unit.id(), Direction.South)){
 				return Direction.South;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.Northwest) > 0){
+			else if(gc.canMove(unit.id(), Direction.Northwest)){
 				return Direction.Northwest;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.Southwest) > 0){
+			else if(gc.canMove(unit.id(), Direction.Southwest)){
 				return Direction.Southwest;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.West) > 0){
+			else if(gc.canMove(unit.id(), Direction.West)){
 				return Direction.West;
 			}
 			else{
@@ -173,28 +173,28 @@ public class Robot{
 			}
 		}
 		else if(dx < 0){
-			if(gc.startingMap(planet).canMove(unit.id(), Direction.West) > 0){
+			if(gc.canMove(unit.id(), Direction.West)){
 				return Direction.West;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.Northwest) > 0){
+			else if(gc.canMove(unit.id(), Direction.Northwest)){
 				return Direction.Northwest;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.Southwest) > 0){
+			else if(gc.canMove(unit.id(), Direction.Southwest)){
 				return Direction.Southwest;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.North) > 0){
+			else if(gc.canMove(unit.id(), Direction.North)){
 				return Direction.North;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.South) > 0){
+			else if(gc.canMove(unit.id(), Direction.South)){
 				return Direction.South;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.Northeast) > 0){
+			else if(gc.canMove(unit.id(), Direction.Northeast)){
 				return Direction.Northeast;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.Southeast) > 0){
+			else if(gc.canMove(unit.id(), Direction.Southeast)){
 				return Direction.Southeast;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.East) > 0){
+			else if(gc.canMove(unit.id(), Direction.East)){
 				return Direction.East;
 			}
 			else{
@@ -202,28 +202,28 @@ public class Robot{
 			}
 		}
 		else if(dy < 0){
-			if(gc.startingMap(planet).canMove(unit.id(), Direction.South) > 0){
+			if(gc.canMove(unit.id(), Direction.South)){
 				return Direction.South;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.Southeast) > 0){
+			else if(gc.canMove(unit.id(), Direction.Southeast)){
 				return Direction.Southeast;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.Southwest) > 0){
+			else if(gc.canMove(unit.id(), Direction.Southwest)){
 				return Direction.Southwest;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.East) > 0){
+			else if(gc.canMove(unit.id(), Direction.East)){
 				return Direction.East;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.West) > 0){
+			else if(gc.canMove(unit.id(), Direction.West)){
 				return Direction.West;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.Northeast) > 0){
+			else if(gc.canMove(unit.id(), Direction.Northeast)){
 				return Direction.Northeast;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.Northwest) > 0){
+			else if(gc.canMove(unit.id(), Direction.Northwest)){
 				return Direction.Northwest;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.North) > 0){
+			else if(gc.canMove(unit.id(), Direction.North)){
 				return Direction.North;
 			}
 			else{
@@ -231,28 +231,28 @@ public class Robot{
 			}
 		}
 		else if(dy > 0){
-			if(gc.startingMap(planet).canMove(unit.id(), Direction.North) > 0){
+			if(gc.canMove(unit.id(), Direction.North)){
 				return Direction.North;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.Northeast) > 0){
+			else if(gc.canMove(unit.id(), Direction.Northeast)){
 				return Direction.Northeast;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.Northwest) > 0){
+			else if(gc.canMove(unit.id(), Direction.Northwest)){
 				return Direction.Northwest;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.East) > 0){
+			else if(gc.canMove(unit.id(), Direction.East)){
 				return Direction.East;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.West) > 0){
+			else if(gc.canMove(unit.id(), Direction.West)){
 				return Direction.West;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.Southeast) > 0){
+			else if(gc.canMove(unit.id(), Direction.Southeast)){
 				return Direction.Southeast;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.Southwest) > 0){
+			else if(gc.canMove(unit.id(), Direction.Southwest)){
 				return Direction.Southwest;
 			}
-			else if(gc.startingMap(planet).canMove(unit.id(), Direction.South) > 0){
+			else if(gc.canMove(unit.id(), Direction.South)){
 				return Direction.South;
 			}
 			else{
