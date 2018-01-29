@@ -11,7 +11,9 @@ public class Worker extends Robot{
 		gc = gameController;
 		random = new Random();
 	}
-
+	public Location getLoc(){
+		return unit.location();
+	}
 	void oneRound(int task) {
 		int pos = 0;
 		if(unit.location().isOnMap()) {

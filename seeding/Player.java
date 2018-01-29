@@ -17,7 +17,7 @@ public class Player{
 		//set up variables we'll use later
       	//boolean goToMars = false;
       	//int[] prod = new int[5];
-      	OrbitPattern orbits = gc.orbitPattern();
+      	OrbitPattern orbit = gc.orbitPattern();
 		
         // Setup hashsets for our units
         HashSet<Worker> myWorkers = new HashSet<Worker>();
@@ -37,7 +37,19 @@ public class Player{
         public int evalMobility(PlanetMap pm){
                 return -1;
         }*/
-      if (EarthIsLarge){
+      
+        //Get info about Earth and Mars
+        PlanetMap EarthMap = gc.startingMap(Planet.Earth);
+        PlanetMap MarsMap = gc.startingMap(Planet.Mars);
+        int EarthSize = EarthMap.getHeight()*EarthMap.getWidth();
+        int MarsSize = MarsMap.getHeight()*MarsMap.getWidth();
+        //EarthMobility = evalMobility(EarthMap);
+
+        boolean mapLarge = EarthSize > 750 ;
+        //boolean haveSuicideKnighted = false;
+
+        //queue all research (hardcoded)
+        if (mapLarge){
           gc.queueResearch(UnitType.Worker); //25
           gc.queueResearch(UnitType.Mage);//25
           gc.queueResearch(UnitType.Ranger); //25
@@ -53,7 +65,7 @@ public class Player{
           gc.queueResearch(UnitType.Ranger); //100
           gc.queueResearch(UnitType.Healer); //100
           gc.queueResearch(UnitType.Knight); //25
-          gc.QueueResearch(UnitType.Knight); //75
+          gc.queueResearch(UnitType.Knight); //75
       }else{
           gc.queueResearch(UnitType.Mage); //25
           gc.queueResearch(UnitType.Mage); //75
@@ -71,18 +83,6 @@ public class Player{
           gc.queueResearch(UnitType.Mage); //75
           gc.queueResearch(UnitType.Healer); //100
       }
-        //Get info about Earth and Mars
-        EarthMap = gc.startingMap(Planet.Earth);
-        MarsMap = gc.startingMap(Planet.Mars);
-        EarthSize = EarthMap.getHeight()*EarthMap.getWidth();
-        MarsSize = MarsMap.getHeight()*MarsMap.getWidth();
-        //EarthMobility = evalMobility(EarthMap);
-
-        boolean mapLarge = EarthSize > 750 ;
-        //boolean haveSuicideKnighted = false;
-
-        //queue all research (hardcoded)
-        gc.determineResearch(mapLarge);
         while(1){
           	enemyLocs.clear();
             // First we will add all new units:
@@ -184,7 +184,7 @@ public class Player{
                 }
             }
 
-            gc.writeTeamArray(0, gc.round()); // updateTeamArray (to indicate alive)
+            //gc.writeTeamArray(0, gc.round()); // updateTeamArray (to indicate alive)
 
             //Big mess from here all the way until.......
             /*if(mapLarge){
@@ -246,10 +246,10 @@ public class Player{
                   		     //set their bug target to this rocket
                             for(Direction d: Direction.values()){
                                 try{
-                                    if(gc.hasUnitAtLocation(r.location().mapLocation().add(d))) {
-                                      try{Unit u = gc.senseUnitAtLocation(r.location().mapLocation().add(d));}catch(Exception e){}
+                                    if(gc.hasUnitAtLocation(r.getLoc().mapLocation().add(d))) {
+                                        Unit u = gc.senseUnitAtLocation(r.getLoc().mapLocation().add(d));
                                         //System.out.println("loaded unit onto rocket");
-                                        if(!u.unitType==UnitType.Worker || gc.round>720)
+                                        if((!u.unitType()==UnitType.Worker || gc.round()>720)&&gc.canLoad(r.id(), u.id()))
                                             try{gc.load(r.id(), u.id());}catch(Exception e){}
                                     }
                                   	if(r.fullGar())
@@ -282,7 +282,7 @@ public class Player{
                   try{myRockets.remove(r);}catch(Exception e){}
               }
                   			else{ 
-                              if(r.location().isOnPlanet(Planet.Mars)) {
+                              if(r.getLoc().isOnPlanet(Planet.Mars)) {
                                 for(Direction d : Direction.values()) {
                                     if(gc.canUnload(r.id(),d))
                                       try{gc.unload(r.id(),d);}catch(Exception e){}
@@ -295,7 +295,7 @@ public class Player{
 			if (gc.getTimeLeftMs()<5)
               try{gc.nextTurn();}catch(Exception e){}
             for(Factory f : myFactories){
-              try{f.oneRound();}catch(Exception e){}
+              try{f.oneMove();}catch(Exception e){}
             }
 			if (gc.getTimeLeftMs()<5)
               try{gc.nextTurn();}catch(Exception e){}
@@ -303,7 +303,7 @@ public class Player{
               int task = 0;
               if(gc.round()%10 == 0){
               ////////////TODO: IMPLEMENT TASK (see guide above)
-                if(myFactories.size() < 3 && w.location.isOnPlanet(Planet.Earth)){
+                if(myFactories.size() < 3 && w.getLoc().isOnPlanet(Planet.Earth)){
                   task = 1;
                 }
                 try{w.oneRound(task);}catch(Exception e){
