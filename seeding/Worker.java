@@ -11,6 +11,9 @@ public class Worker extends Robot{
 		gc = gameController;
 		random = new Random();
 	}
+	public int id(){
+		return unit.id();
+	}
 	public Location getLoc(){
 		return unit.location();
 	}

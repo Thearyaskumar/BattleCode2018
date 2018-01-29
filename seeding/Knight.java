@@ -11,7 +11,9 @@ public class Knight extends Robot{
 		gc = gameController;
 		random = new Random();
 	}
-
+	public int id(){
+		return unit.id();
+	}
 	void oneRound() {
 		if(unit.location().isOnMap()) {
 			if(unit.location().isOnPlanet(Planet.Earth)) { //stuff specific to Earth

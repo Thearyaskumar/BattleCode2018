@@ -9,7 +9,9 @@ public class Mage extends Robot{
 		unit = u;
 		gc = gameController;
 	}
-
+	public int id(){
+		return unit.id();
+	}
 	void oneRound() {
 		if(unit.location().isOnMap()) {
 			if(unit.location().isOnPlanet(Planet.Earth)) { //stuff specific to Earth
