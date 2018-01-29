@@ -28,7 +28,7 @@ public class Factory{
     }
     public void unloadGarrison(){
         /* Try to unload your garrison in any available spaces */
-        VecUnitID garrison = unit.structureGarrison();
+        //VecUnitID garrison = unit.structureGarrison();
         for(Direction d : Direction.values()){
             if(gc.canUnload(unit.id(), d))
                 gc.unload(unit.id(), d);
@@ -40,7 +40,7 @@ public class Factory{
     public void oneMove(){
         if (gc.round()>600 && gc.myUnits().size()>0)
             return; //save Karbonite
-        if (building()!=0){
+        if (building()==0){
             if (canUnloadGarrison())
                 unloadGarrison();
             else{
