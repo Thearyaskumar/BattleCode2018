@@ -11,11 +11,11 @@ public class Rocket{
 		gc = game;
 		wanted = new ArrayList<UnitType>();
 		findLandingLoc();
-		round = gc.round();//decide what robots the rocket wants based on the round number
+		long round = gc.round();//decide what robots the rocket wants based on the round number
 		if (round<250)
 			wanted.addAll(Arrays.asList(UnitType.Mage, UnitType.Worker, UnitType.Knight));
 		else if (round<500)
-			wanted.addAll(Arrays.asList(UnitType.Mage, UnitType.Mage, UnitType.Worker, UnitType.worker, UnitType.Knight));
+			wanted.addAll(Arrays.asList(UnitType.Mage, UnitType.Mage, UnitType.Worker, UnitType.Worker, UnitType.Knight));
 		//else anything goes, just get off Earth fast!
 		target = -1;
 	}
@@ -38,7 +38,7 @@ public class Rocket{
 		landingLoc = new MapLocation(Planet.Mars, (int)(Math.random()*gc.startingMap(Planet.Mars).getWidth()), (int)(Math.random()*gc.startingMap(Planet.Mars).getHeight()));
 	}
 	public boolean fullHealth(){
-		return unit.health()!=unit.maximumHealth();
+		return unit.health()!=unit.maxHealth();
 	}
 	public long health(){
 		return unit.health();

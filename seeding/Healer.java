@@ -14,7 +14,7 @@ public class Healer extends Robot{
 
 	void oneRound() {
 		if(unit.location().isOnMap()) {
-			if(unit.location.isOnPlanet(Planet.Earth)) { //stuff specific to Earth
+			if(unit.location().isOnPlanet(Planet.Earth)) { //stuff specific to Earth
 				VecUnit nearbyRockets = gc.senseNearbyUnitsByType(unit.location().mapLocation(), 5, UnitType.Rocket); //go towards nearby rockets
 				for(int i = 0; i < nearbyRockets.size(); i++) {
 					if(nearbyRockets.get(i).structureGarrison().size()<nearbyRockets.get(i).structureMaxCapacity()) {
@@ -35,15 +35,15 @@ public class Healer extends Robot{
 				}
 			}
 
-			//choose target if target is null
+			//choose moveTarget if moveTarget is null
 			if(moveTarget==null || visibleTeamMates.size()==0 && !Player.getEnemyLocs().isEmpty())
-				target = random.choice(Player.getEnemyLocs());
+				moveTarget = randomChoice(Player.getEnemyLocs());
 			else if(moveTarget==null)
-				target = new MapLocation(gc.planet(), (int)(Math.random()*gc.startingMap(gc.planet()).getWidth()), (int)(Math.random()*gc.startingMap(gc.planet()).getHeight()));
+				moveTarget = new MapLocation(gc.planet(), (int)(Math.random()*gc.startingMap(gc.planet()).getWidth()), (int)(Math.random()*gc.startingMap(gc.planet()).getHeight()));
 
 			if(!gc.isAttackReady(unit.id()) && gc.isMoveReady(unit.id())) {
-				if(target!=null) {
-					Direction d = bug2(target);
+				if(moveTarget!=null) {
+					Direction d = bug2(moveTarget);
 					if(gc.canMove(unit.id(),d)) {
 						gc.moveRobot(unit.id(), d);
 					}

@@ -263,4 +263,16 @@ public class Robot{
 			return null;
 		}
 	}
+
+	public MapLocation randomChoice(HashSet<MapLocation> myHashSet) {
+		int size = myHashSet.size();
+		int item = (int)(Math.random()*size); // In real life, the Random object should be rather more shared than this
+		int i = 0;
+		for(MapLocation obj : myhashSet)
+		{
+			if (i == item)
+				return obj;
+			i++;
+		}
+	}
 }

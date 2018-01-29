@@ -13,9 +13,9 @@ public class Worker extends Robot{
 	}
 
 	void oneRound(int task) {
+		int pos = 0;
 		if(unit.location().isOnMap()) {
-			if(unit.location.isOnPlanet(Planet.Earth)) { //stuff specific to Earth
-
+			if(unit.location().isOnPlanet(Planet.Earth)) { //stuff specific to Earth
 				VecMapLocation m = gc.allLocationsWithin(unit.location().mapLocation(),1);
                 for(pos = 0; pos < m.size(); pos++) {
                     if(gc.hasUnitAtLocation(m.get(pos)) && gc.senseUnitAtLocation(m.get(pos)).unitType()==UnitType.Factory && gc.senseUnitAtLocation(m.get(pos)).structureIsBuilt()==0 && gc.canBuild(unit.id(),gc.senseUnitAtLocation(m.get(pos)).id())) {
@@ -44,7 +44,6 @@ public class Worker extends Robot{
 				for(pos = 0; pos < m.size(); pos++) {
 					if(gc.canBlueprint(unit.id(),UnitType.Factory,unit.location().mapLocation().directionTo(m.get(pos)))) {  
 						gc.blueprint(unit.id(),UnitType.Factory,unit.location().mapLocation().directionTo(m.get(pos)));
-						moveDone = true;
 						break;
 					}
 				}
@@ -53,7 +52,6 @@ public class Worker extends Robot{
 				for(pos = 0; pos < m.size(); pos++) {
 					if(gc.canBlueprint(unit.id(),UnitType.Rocket,unit.location().mapLocation().directionTo(m.get(pos)))) {  
 						gc.blueprint(unit.id(),UnitType.Rocket,unit.location().mapLocation().directionTo(m.get(pos)));
-						moveDone = true;
 						break;
 					}
 				}
@@ -63,25 +61,26 @@ public class Worker extends Robot{
 
 			//mine all surrounding karbonite
 			VecMapLocation m = gc.allLocationsWithin(unit.location().mapLocation(),1);
-			int pos = 0;
+			pos = 0;
 			while(pos<m.size() && gc.karboniteAt(m.get(pos))<=0) {
 				pos++;
 			}
 			if(pos<m.size() && gc.canHarvest(unit.id(),unit.location().mapLocation().directionTo(m.get(pos)))) {
 				gc.harvest(unit.id(),unit.location().mapLocation().directionTo(m.get(pos)));
 			} else if(pos==m.size()) {
-				//choose target if target is null
-				if(target==null) {
+				//choose moveTarget if moveTarget is null
+				if(moveTarget==null) {
 					m = gc.allLocationsWithin(unit.location().mapLocation(),unit.visionRange());
 					for(int i = 0; i < 5; i++) {
-						if(gc.karboniteAt(m.get((int)(Math.random()*m.size())))>0)
-							moveTarget = m;
+						int p = (int)(Math.random()*m.size());
+						if(gc.karboniteAt(m.get(p))>0)
+							moveTarget = m.get(p);
 					}
 				}
 
 				if(gc.isMoveReady(unit.id())) {
-					if(target!=null) {
-						Direction d = bug2(target);
+					if(moveTarget!=null) {
+						Direction d = bug2(moveTarget);
 						if(gc.canMove(unit.id(),d)) {
 							gc.moveRobot(unit.id(), d);
 						}

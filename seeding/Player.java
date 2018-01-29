@@ -27,7 +27,7 @@ public class Player{
         HashSet<Healer> myHealers = new HashSet<Healer>();
         HashSet<Factory> myFactories = new HashSet<Factory>();
         HashSet<Rocket> myRockets = new HashSet<Rocket>();
-        HashSet<int> seen = new HashSet<int>();
+        HashSet<Integer> seen = new HashSet<Integer>();
 
         //UnitType[] attackPriority = [UnitType.Factory,UnitType.Rocket,UnitType.Mage,UnitType.Worker,UnitType.Ranger,UnitType.Knight,UnitType.Healer];
 
@@ -123,7 +123,7 @@ public class Player{
           	// myHealers.clear();	
             
             VecUnit units = gc.myUnits();
-            HashSet<int> thisRound = new HashSet<int>();
+            HashSet<Integer> thisRound = new HashSet<Integer>();
             for(int i = 0; i < units.size(); i++){
                 Unit u = units.get(i); // Get the unit
                 thisRound.add(u.id());
