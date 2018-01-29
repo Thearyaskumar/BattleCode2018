@@ -23,9 +23,6 @@ public class Factory{
             return; // Can't produce robot
         gc.produceRobot(unit.id(), ut);
     }
-    public int building(){
-        return unit.isFactoryProducing() ==0 ? 0 : 1;
-    }
     public void unloadGarrison(){
         /* Try to unload your garrison in any available spaces */
         //VecUnitID garrison = unit.structureGarrison();
@@ -40,20 +37,20 @@ public class Factory{
     public void oneMove(){
         if (gc.round()>600 && gc.myUnits().size()>0)
             return; //save Karbonite
-        if (building()==0){
+        if (unit.isFactoryProducing()==0){
             if (canUnloadGarrison())
                 unloadGarrison();
             else{
                 boolean largeMap = size>750;
                 if (largeMap){
-                    pworker = 0.4*((600-gc.round())/600);
-                    phealer = 0.4*(gc.round()/600);
+                    pworker = 0.4*((600.0-1.0*gc.round())/600.0);
+                    phealer = 0.4*(1.0*gc.round()/600.0);
                     pmage = 0.3;
                     pranger = 0.2;
                     pknight = 0.1;
                 }else{
-                    pworker = 0.2*((600-gc.round())/600);
-                    phealer = 0.2*(gc.round()/600);
+                    pworker = 0.2*((600.0-1.0*gc.round())/600.0);
+                    phealer = 0.2*(1.0*gc.round()/600.0);
                     pmage = 0.4;
                     pranger = 0.2;
                     pknight = 0.2;
