@@ -3,7 +3,7 @@ import java.util.*;
 public class Factory{
     Unit unit;
     GameController gc;
-    int size;
+    long size;
     double pworker = 0;
     double pmage = 0;
     double pranger = 0;
@@ -40,7 +40,7 @@ public class Factory{
     public void oneMove(){
         if (gc.round()>600 && gc.myUnits().size()>0)
             return; //save Karbonite
-        if (!building()){
+        if (building()!=0){
             if (canUnloadGarrison())
                 unloadGarrison();
             else{
@@ -57,7 +57,7 @@ public class Factory{
                     pmage = 0.4;
                     pranger = 0.2;
                     pknight = 0.2;
-                rand = random();
+                double rand = Math.random();
                 if (rand<pworker)
                     build(UnitType.Worker); 
                 else if (rand<pworker+phealer)

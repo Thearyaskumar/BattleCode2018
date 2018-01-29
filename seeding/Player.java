@@ -69,7 +69,7 @@ public class Player{
           gc.queueResearch(UnitType.Knight); //75
           gc.queueResearch(UnitType.Knight); //100
           gc.queueResearch(UnitType.Mage); //75
-          gc.queueResearch(UnitType.Healer) //100
+          gc.queueResearch(UnitType.Healer); //100
       }
         //Get info about Earth and Mars
         EarthMap = gc.startingMap(Planet.Earth);
@@ -332,6 +332,7 @@ public class Player{
             gc.nextTurn();
         }
     }
+}
 
   	/*void rocketIfPossible();
     int calcHab(){

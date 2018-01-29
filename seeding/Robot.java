@@ -26,6 +26,7 @@ public class Robot{
 		int targetY = targetMapLoc.getY();
 		int dx = targetX - myMapLoc.getX();
 		int dy = targetY - myMapLoc.getY();
+		Planet planet = gc.planet();
 		if(dx > 0 && dy > 0){
 			if(gc.startingMap(planet).canMove(unit.id(), Direction.Northeast) > 0){
 				return Direction.Northeast;
