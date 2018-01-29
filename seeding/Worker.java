@@ -42,22 +42,22 @@ public class Worker extends Robot{
 						break;
 					}
 				}
-			}
+			
 
-			if(task==1) {
-				VecMapLocation m = gc.allLocationsWithin(unit.location().mapLocation(),1);
-				for(pos = 0; pos < m.size(); pos++) {
-					if(gc.canBlueprint(unit.id(),UnitType.Factory,unit.location().mapLocation().directionTo(m.get(pos)))) {  
-						gc.blueprint(unit.id(),UnitType.Factory,unit.location().mapLocation().directionTo(m.get(pos)));
-						break;
+				m = gc.allLocationsWithin(unit.location().mapLocation(),1);
+				if(task==1) {
+					for(pos = 0; pos < m.size(); pos++) {
+						if(gc.canBlueprint(unit.id(),UnitType.Factory,unit.location().mapLocation().directionTo(m.get(pos)))) {  
+							gc.blueprint(unit.id(),UnitType.Factory,unit.location().mapLocation().directionTo(m.get(pos)));
+							break;
+						}
 					}
-				}
-			} else if(gc.round()>600) {
-				VecMapLocation m = gc.allLocationsWithin(unit.location().mapLocation(),1);
-				for(pos = 0; pos < m.size(); pos++) {
-					if(gc.canBlueprint(unit.id(),UnitType.Rocket,unit.location().mapLocation().directionTo(m.get(pos)))) {  
-						gc.blueprint(unit.id(),UnitType.Rocket,unit.location().mapLocation().directionTo(m.get(pos)));
-						break;
+				} else if(gc.round()>600) {
+					for(pos = 0; pos < m.size(); pos++) {
+						if(gc.canBlueprint(unit.id(),UnitType.Rocket,unit.location().mapLocation().directionTo(m.get(pos)))) {  
+							gc.blueprint(unit.id(),UnitType.Rocket,unit.location().mapLocation().directionTo(m.get(pos)));
+							break;
+						}
 					}
 				}
 			}
@@ -67,21 +67,21 @@ public class Worker extends Robot{
 			//mine all surrounding karbonite
 			VecMapLocation m = gc.allLocationsWithin(unit.location().mapLocation(),1);
 			pos = 0;
-			while(pos<m.size() && gc.karboniteAt(m.get(pos))<=0) {
+			while(pos<m.size() && gc.canHarvest(unit.id(),unit.location().mapLocation().directionTo(m.get(pos)))) {
 				pos++;
 			}
 			if(pos<m.size() && gc.canHarvest(unit.id(),unit.location().mapLocation().directionTo(m.get(pos)))) {
 				gc.harvest(unit.id(),unit.location().mapLocation().directionTo(m.get(pos)));
 			} else if(pos==m.size()) {
 				//choose moveTarget if moveTarget is null
-				if(moveTarget==null) {
-					m = gc.allLocationsWithin(unit.location().mapLocation(),unit.visionRange());
-					for(int i = 0; i < 5; i++) {
-						int p = (int)(Math.random()*m.size());
-						if(gc.karboniteAt(m.get(p))>0)
-							moveTarget = m.get(p);
-					}
+				m = gc.allLocationsWithin(unit.location().mapLocation(),unit.visionRange());
+				for(int i = 0; i < 5; i++) {
+					int p = (int)(Math.random()*m.size());
+					if(gc.karboniteAt(m.get(p))>0)
+						moveTarget = m.get(p);
 				}
+				if(moveTarget==null)
+					moveTarget=new MapLocation(Planet.Earth, (int)(Math.random()*gc.startingMap(Planet.Earth).getWidth()), (int)(Math.random()*gc.startingMap(Planet.Earth).getHeight()));
 
 				if(gc.isMoveReady(unit.id())) {
 					if(moveTarget!=null) {
