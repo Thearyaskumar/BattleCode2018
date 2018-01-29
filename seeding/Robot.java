@@ -79,6 +79,7 @@ public class Robot{
 			else{
 				return null;
 			}
+		}
 		else if(dx < 0 && dy < 0){
 			if(gc.startingMap(planet).canMove(unit.id(), Direction.Southwest) > 0){
 				return Direction.Southwest;
@@ -223,7 +224,6 @@ public class Robot{
 			else{
 				return null;
 			}
-
 		}
 		else if(dy > 0){
 			if(gc.startingMap(planet).canMove(unit.id(), Direction.North) > 0){
@@ -252,15 +252,10 @@ public class Robot{
 			}
 			else{
 				return null;
+			}
 		}
 		else{
 			return null;
 		}
-	}
-		/*
-		int orthoLine = -xDisplacement/yDisplacement; //creates orthogonal search line based off of slope of displacement line
-		wait, shouldn't it be 1.0*this? -Ruben
-		*/
-	public void performTasks(){
 	}
 }

@@ -36,42 +36,40 @@ public class Player{
         public int evalMobility(PlanetMap pm){
                 return -1;
         }*/
-      	public void determineResearch(boolean EarthIsLarge){
-          if (EarthIsLarge){
-              gc.queueResearch(UnitType.Worker); //25
-              gc.queueResearch(UnitType.Mage);//25
-              gc.queueResearch(UnitType.Ranger); //25
-              gc.queueResearch(UnitType.Rocket); //50
-              gc.queueResearch(UnitType.Mage);//75
-              gc.queueResearch(UnitType.Worker); //75
-              gc.queueResearch(UnitType.Worker); //75
-              gc.queueResearch(UnitType.Worker); //75
-              gc.queueResearch(UnitType.Rocket); //100
-              gc.queueResearch(UnitType.Rocket); //100
-              gc.queueResearch(UnitType.Mage); //100
-              gc.queueResearch(UnitType.Healer); //25
-              gc.queueResearch(UnitType.Ranger); //100
-              gc.queueResearch(UnitType.Healer); //100
-              gc.queueResearch(UnitType.Knight); //25
-              gc.QueueResearch(UnitType.Knight); //75
-          }else{
-              gc.queueResearch(UnitType.Mage); //25
-              gc.queueResearch(UnitType.Mage); //75
-              gc.queueResearch(UnitType.Ranger);//25
-              gc.queueResearch(UnitType.Worker); //25
-              gc.queueResearch(UnitType.Mage); //100
-              gc.queueResearch(UnitType.Healer); //25
-              gc.queueResearch(UnitType.Healer); //100
-              gc.queueResearch(UnitType.Knight); //25
-              gc.queueResearch(UnitType.Rocket); //50
-              gc.queueResearch(UnitType.Rocket); //100
-              gc.queueResearch(UnitType.Ranger); //100
-              gc.queueResearch(UnitType.Knight); //75
-              gc.queueResearch(UnitType.Knight); //100
-              gc.queueResearch(UnitType.Mage); //75
-              gc.queueResearch(UnitType.Healer) //100
-          }
-        }
+      if (EarthIsLarge){
+          gc.queueResearch(UnitType.Worker); //25
+          gc.queueResearch(UnitType.Mage);//25
+          gc.queueResearch(UnitType.Ranger); //25
+          gc.queueResearch(UnitType.Rocket); //50
+          gc.queueResearch(UnitType.Mage);//75
+          gc.queueResearch(UnitType.Worker); //75
+          gc.queueResearch(UnitType.Worker); //75
+          gc.queueResearch(UnitType.Worker); //75
+          gc.queueResearch(UnitType.Rocket); //100
+          gc.queueResearch(UnitType.Rocket); //100
+          gc.queueResearch(UnitType.Mage); //100
+          gc.queueResearch(UnitType.Healer); //25
+          gc.queueResearch(UnitType.Ranger); //100
+          gc.queueResearch(UnitType.Healer); //100
+          gc.queueResearch(UnitType.Knight); //25
+          gc.QueueResearch(UnitType.Knight); //75
+      }else{
+          gc.queueResearch(UnitType.Mage); //25
+          gc.queueResearch(UnitType.Mage); //75
+          gc.queueResearch(UnitType.Ranger);//25
+          gc.queueResearch(UnitType.Worker); //25
+          gc.queueResearch(UnitType.Mage); //100
+          gc.queueResearch(UnitType.Healer); //25
+          gc.queueResearch(UnitType.Healer); //100
+          gc.queueResearch(UnitType.Knight); //25
+          gc.queueResearch(UnitType.Rocket); //50
+          gc.queueResearch(UnitType.Rocket); //100
+          gc.queueResearch(UnitType.Ranger); //100
+          gc.queueResearch(UnitType.Knight); //75
+          gc.queueResearch(UnitType.Knight); //100
+          gc.queueResearch(UnitType.Mage); //75
+          gc.queueResearch(UnitType.Healer) //100
+      }
         //Get info about Earth and Mars
         EarthMap = gc.startingMap(Planet.Earth);
         MarsMap = gc.startingMap(Planet.Mars);
@@ -229,10 +227,12 @@ public class Player{
                   	case 2:  gc.launchRocket(r.id(), r.getLandingLoc()); 
                   try{r.setTarget(3);}catch(Exception e){}
                              break; //no reason to test if I can... done in case 1
-                  	case 3:  if (r.emptyGar())
+                  	case 3:  if (r.emptyGar()){
                       try{gc.disintegrateUnit(r.id());}catch(Exception e){}
+                  	
                   try{myRockets.remove(r);}catch(Exception e){}
-                  			else{
+              }
+                  			else{ 
                               if(r.location().isOnPlanet(Planet.Mars)) {
                                 for(Direction d : Direction.values()) {
                                     if(gc.canUnload(r.id(),d))
@@ -298,4 +298,4 @@ public class Player{
     void buildFactories();
     void agro();
     void determineResearch();*/
-}
+} //REACHED END PARSING

@@ -41,7 +41,7 @@ public class Rocket{
 		return unit.health()!=unit.maximumHealth();
 	}
 	public long health(){
-		return unit.health()
+		return unit.health();
 	}
 	public boolean fullGar(){
 		return unit.structureGarrison().size()==unit.structureMaxCapacity();

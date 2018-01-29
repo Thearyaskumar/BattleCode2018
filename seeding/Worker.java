@@ -73,7 +73,7 @@ public class Worker extends Robot{
 				//choose target if target is null
 				if(target==null) {
 					m = gc.allLocationsWithin(unit.location().mapLocation(),unit.visionRange());
-					for(int i == 0; i < 5; i++) {
+					for(int i = 0; i < 5; i++) {
 						if(gc.karboniteAt(m.get((int)(Math.random()*m.size())))>0)
 							moveTarget = m;
 					}
