@@ -153,31 +153,31 @@ public class Player{
                     seen.remove(r.id());
                 }
             }
-            for(Robot r:myWorkers) {
+            for(Worker r:myWorkers) {
                 if(!thisRound.contains(r.id())) {
                     myWorkers.remove(r);
                     seen.remove(r.id());
                 }
             }
-            for(Robot r:myHealers) {
+            for(Healer r:myHealers) {
                 if(!thisRound.contains(r.id())) {
                     myHealers.remove(r);
                     seen.remove(r.id());
                 }
             }
-            for(Robot r:myKnights) {
+            for(Knight r:myKnights) {
                 if(!thisRound.contains(r.id())) {
                     myKnights.remove(r);
                     seen.remove(r.id());
                 }
             }
-            for(Robot r:myRangers) {
+            for(Ranger r:myRangers) {
                 if(!thisRound.contains(r.id())) {
                     myRangers.remove(r);
                     seen.remove(r.id());
                 }
             }
-            for(Robot r:myMages) {
+            for(Mage r:myMages) {
                 if(!thisRound.contains(r.id())) {
                     myMages.remove(r);
                     seen.remove(r.id());
