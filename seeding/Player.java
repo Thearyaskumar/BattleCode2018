@@ -309,6 +309,7 @@ public class Player{
                 try{w.oneRound(task);}catch(Exception e){
               }
             }
+          }
             if (gc.getTimeLeftMs()<5)
               try{gc.nextTurn();}catch(Exception e){}
 			for(Ranger r : myRangers){
@@ -349,4 +350,4 @@ public class Player{
     void buildFactories();
     void agro();
     void determineResearch();*/
-} //REACHED END PARSING
+ //REACHED END PARSING
