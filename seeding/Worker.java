@@ -76,12 +76,12 @@ public class Worker extends Robot{
 			}
 			if(pos<m.size() && gc.canHarvest(unit.id(),unit.location().mapLocation().directionTo(m.get(pos)))) {
 				gc.harvest(unit.id(),unit.location().mapLocation().directionTo(m.get(pos)));
-			} else if(pos==m.size()) {
+			} else if(unit.workerHasActed()==0) {
 				//choose moveTarget if moveTarget is null
 				m = gc.allLocationsWithin(unit.location().mapLocation(),unit.visionRange());
 				for(int i = 0; i < 5; i++) {
 					int p = (int)(Math.random()*m.size());
-					if(gc.karboniteAt(m.get(p))>0)
+					if(gc.canHarvest(unit.id(),unit.location().mapLocation().directionTo(m.get(pos))))
 						moveTarget = m.get(p);
 				}
 				if(moveTarget==null)

@@ -328,10 +328,10 @@ public class Player{
                if(myFactories.size() < 3 && w.getLoc().isOnPlanet(Planet.Earth)){
                   task = 1;
                }
-               try{w.oneRound(task);}
-               catch(Exception e){
-                 e.printStackTrace();
-               }
+            }
+            try{w.oneRound(task);}
+            catch(Exception e){
+              e.printStackTrace();
             }
          }
          if (gc.getTimeLeftMs()<5)
