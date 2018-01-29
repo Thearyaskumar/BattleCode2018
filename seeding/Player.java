@@ -330,9 +330,11 @@ public class Player{
             for(Knight k : myKnights){
               try{k.oneRound();}catch(Exception e){}
             }
+
+            gc.nextTurn();
+
         }
 
-        gc.nextTurn();
     }
 }
 
