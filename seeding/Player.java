@@ -332,7 +332,7 @@ public class Player{
             try{w.oneRound(task);}
             catch(Exception e){
               e.printStackTrace();
-            }
+            } //easter egg//
          }
          if (gc.getTimeLeftMs()<5)
             try{gc.nextTurn();}
